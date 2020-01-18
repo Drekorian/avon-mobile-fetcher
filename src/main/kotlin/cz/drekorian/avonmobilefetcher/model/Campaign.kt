@@ -1,5 +1,7 @@
 package cz.drekorian.avonmobilefetcher.model
 
+import java.util.*
+
 /**
  * This data class stores the campaign data.
  *
@@ -10,7 +12,7 @@ data class Campaign(val year: String, val id: String) {
 
     companion object {
         private const val CATALOG_DELIMITER = " "
-        private const val CAMPAIGN_DELIMITER = "/"
+//        private const val CAMPAIGN_DELIMITER = "/"
 
         /**
          * Returns a new [Catalog] instance from given main catalog name.
@@ -19,14 +21,17 @@ data class Campaign(val year: String, val id: String) {
          * @return new catalog instance from given main catalog name
          */
         fun fromMainCatalogName(mainCatalogName: String): Campaign {
-            val rawCampaignId = mainCatalogName
-                .split(CATALOG_DELIMITER)[1]
-                .split(CAMPAIGN_DELIMITER)
+// FIXME: Since campaign 2020/02 the main catalog name is no longer "Katalog YYYY/CC" but just "Katalog [C]C"
+//            val rawCampaignId = mainCatalogName
+//                .split(CATALOG_DELIMITER)[1]
+//                .split(CAMPAIGN_DELIMITER)
 
-            val year = rawCampaignId[0]
-            val campaign = rawCampaignId[1]
+//            val year = rawCampaignId[0]
+//            val campaign = rawCampaignId[1]
+            val year = Calendar.getInstance()[Calendar.YEAR].toString()
+            val campaign = mainCatalogName.split(CATALOG_DELIMITER)[1]
 
-            return Campaign(campaign, year)
+            return Campaign(year, campaign)
         }
     }
 }
