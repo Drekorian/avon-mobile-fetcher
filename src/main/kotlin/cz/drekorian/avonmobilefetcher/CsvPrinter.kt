@@ -26,7 +26,16 @@ object CsvPrinter {
             outputStream.writeBom()
             val stream = PrintStream(outputStream, true, Charsets.UTF_8.name())
             stream.println(header.joinToString(separator = CSV_SEPARATOR))
-            data.forEach { line -> stream.println(line) }
+
+            val headerSize = header.size
+            data.forEach { line ->
+                val lineSize = line.split(CSV_SEPARATOR).size
+                require(lineSize == headerSize) {
+                    "CSV mismatch, current line ($line) has $lineSize columns while header has $headerSize columns."
+                }
+
+                stream.println(line)
+            }
         }
     }
 

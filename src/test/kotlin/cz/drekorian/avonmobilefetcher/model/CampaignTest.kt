@@ -14,6 +14,11 @@ import java.util.Calendar
  */
 class CampaignTest {
 
+    @BeforeEach
+    fun setUp() {
+        Campaign.resetOverride()
+    }
+
     @Test
     fun `when valid override is in place Campaign is properly parsed`() {
         // arrange
@@ -30,7 +35,7 @@ class CampaignTest {
 
     @Suppress("SpellCheckingInspection")
     @ParameterizedTest
-    @ValueSource(strings= ["Katalog 2020/01"/*, "Katalog 2020/1", "Katalog 2020/10", "Katalog 1999/99"*/])
+    @ValueSource(strings= ["Katalog 2020/01", "Katalog 2020/1", "Katalog 2020/10", "Katalog 1999/99"])
     fun `when no override with old format Campaign is properly parsed`(rawCampaign: String) {
         // act
         val campaign = Campaign.getCurrentCampaign(rawCampaign)

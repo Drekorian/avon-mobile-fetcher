@@ -54,8 +54,9 @@ data class Record(
         |${productDetails.variant}
         |${productDetails.price}
         |${productDetails.priceStandard}
-        |="${productDetails.description
+        |"${productDetails.description
             .replace("\"", "\"\"")
+            .replace(";", ",")
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
         }"
