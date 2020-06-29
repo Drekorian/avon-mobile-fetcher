@@ -2,7 +2,15 @@ package cz.drekorian.avonmobilefetcher.model
 
 import cz.drekorian.avonmobilefetcher.CSV_SEPARATOR
 
-class Record(
+/**
+ * This data class stores the combined info about product and product details.
+ *
+ * @property catalog product catalog
+ * @property product product
+ * @property productDetails product details
+ * @author Marek Osvald
+ */
+data class Record(
     private val catalog: Catalog,
     private val product: Product,
     private val productDetails: ProductDetails
@@ -14,6 +22,12 @@ class Record(
         private const val LINE_SEPARATOR = "____"
     }
 
+    /**
+     * Serializes the record into a CSV format.
+     *
+     * @param campaign current campaign
+     * @return A record in a CSV format
+     */
     fun toCsv(campaign: Campaign): String =
         """
         |${campaign.year}
@@ -40,7 +54,7 @@ class Record(
         |${productDetails.variant}
         |${productDetails.price}
         |${productDetails.priceStandard}
-        |"${productDetails.description
+        |="${productDetails.description
             .replace("\"", "\"\"")
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
@@ -49,8 +63,7 @@ class Record(
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
         }"
-        |${productDetails.shadeFile}
-        |"""
+        |${productDetails.shadeFile}"""
             .lines()
             .filterIndexed { index, _ -> index != 0 }
             .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }

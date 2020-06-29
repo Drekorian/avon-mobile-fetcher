@@ -1,14 +1,18 @@
-package cz.drekorian.avonmobilefetcher.http.catalog
+package cz.drekorian.avonmobilefetcher.http.products
 
-import cz.drekorian.avonmobilefetcher.I18n
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
 import cz.drekorian.avonmobilefetcher.http.KHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
-import cz.drekorian.avonmobilefetcher.logger
+import cz.drekorian.avonmobilefetcher.i18n
 import khttp.responses.Response
-import mu.KotlinLogging
 
-class CatalogRequest : Request() {
+/**
+ * This request attempts to load a list of products for a given catalog.
+ *
+ * @see ProductsResponse
+ * @author Marek Osvald
+ */
+class ProductsRequest : Request() {
 
     companion object {
         private const val URL = "$BASE_URL/%s/common/res/products_details.json"
@@ -18,15 +22,15 @@ class CatalogRequest : Request() {
      * Sends the request. Attempts to load product data about a catalog with given [catalogId].
      *
      * @param catalogId unique catalog ID
-     * @return valid [CatalogResponse] instance, provided that the request has finished successfully, null otherwise
+     * @return valid [ProductsResponse] instance, provided that the request has finished successfully, null otherwise
      */
-    fun send(catalogId: String): CatalogResponse? {
+    fun send(catalogId: String): ProductsResponse? {
         val response: Response = KHttpClient.get(URL.format(catalogId))
 
-        if (!checkStatusCode(response, logger, I18n.get("catalog_request_error").format(catalogId))) {
+        if (!checkStatusCode(response, i18n("catalog_request_error").format(catalogId))) {
             return null
         }
 
-        return CatalogResponse(response.jsonArray)
+        return ProductsResponse(response.jsonArray)
     }
 }

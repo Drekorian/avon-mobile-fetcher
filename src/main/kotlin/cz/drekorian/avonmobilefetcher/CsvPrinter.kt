@@ -3,28 +3,30 @@ package cz.drekorian.avonmobilefetcher
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
-import java.nio.charset.Charset
 
 const val CSV_SEPARATOR = ";"
 
+/**
+ * This class writes Excel-compatible CSV files into a given file path.
+ *
+ * @author Marek Osvald
+ */
 object CsvPrinter {
 
+    /**
+     * Prints given [data] into a file with file path [filePath].
+     *
+     * @param filePath file path to store the given [data]
+     * @param data data to store
+     * @param header a header to write at the beginning of the CSV
+     */
     fun print(filePath: String, data: Iterable<String>, vararg header: String) {
 
         File(filePath).outputStream().use { outputStream ->
             outputStream.writeBom()
             val stream = PrintStream(outputStream, true, Charsets.UTF_8.name())
             stream.println(header.joinToString(separator = CSV_SEPARATOR))
-
-//                val headerSize = header.size
-            data.forEach { line ->
-                //                val lineSize = line.split(CSV_SEPARATOR).size
-//                require(lineSize == headerSize) {
-//                    "CSV mismatch, current line ($line) has $lineSize columns while header has $headerSize columns."
-//                }
-
-                stream.println(line)
-            }
+            data.forEach { line -> stream.println(line) }
         }
     }
 

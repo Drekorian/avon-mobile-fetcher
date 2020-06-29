@@ -1,11 +1,18 @@
 package cz.drekorian.avonmobilefetcher.http
 
+import cz.drekorian.avonmobilefetcher.debugI18n
+import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import khttp.DEFAULT_TIMEOUT
 import khttp.responses.Response
 import khttp.structures.authorization.Authorization
 import khttp.structures.files.FileLike
 
+/**
+ * This class serves as a simple HTTP client that automatically logs requests and responses.
+ *
+ * @author Marek Osvald
+ */
 object KHttpClient {
 
     /**
@@ -30,14 +37,15 @@ object KHttpClient {
     ): Response {
         val response: Response =
             khttp.get(url, headers, params, data, json, auth, cookies, timeout, allowRedirects, stream, files)
-        logger.info("Request: ${response.request.url}")
+        logger.infoI18n("request", response.request.url)
 
-        when (response.text[0]) {
-            '[' -> logger.debug("Response:\n${response.jsonArray.toString(INDENT_FACTOR)}")
-            '{' -> logger.debug("Response:\n${response.jsonObject.toString(INDENT_FACTOR)}")
-            else -> logger.debug("Response:\n${response.text}")
+        val prettyResponse = when (response.text[0]) {
+            '[' -> response.jsonArray.toString(INDENT_FACTOR)
+            '{' -> response.jsonObject.toString(INDENT_FACTOR)
+            else -> response.text
         }
 
+        logger.debugI18n("response", prettyResponse)
         return response
     }
 }

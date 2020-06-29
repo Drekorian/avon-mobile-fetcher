@@ -1,18 +1,38 @@
 package cz.drekorian.avonmobilefetcher.model
 
-import java.util.*
+import cz.drekorian.avonmobilefetcher.i18n
+import cz.drekorian.avonmobilefetcher.logger
+import java.lang.IllegalArgumentException
+import java.util.Calendar
 
 /**
  * This data class stores the campaign data.
  *
  * @property year campaign year
  * @property id campaign identifier within the year
+ * @author Marek Osvald
  */
 data class Campaign(val year: String, val id: String) {
 
     companion object {
-        private const val CATALOG_DELIMITER = " "
-//        private const val CAMPAIGN_DELIMITER = "/"
+        private val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
+        @Suppress("SpellCheckingInspection")
+        private val CAMPAIGN_SLASHED_FORMAT_REGEX = "Katalog ([1-9][0-9]{3})/([0-9]?[0-9])".toRegex()
+        private const val SLASHED_FORMAT_REQUIRED_GROUPS_COUNT = 3
+        @Suppress("SpellCheckingInspection")
+        private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[1-9])".toRegex()
+        private const val NEW_FORMAT_REQUIRED_GROUPS_COUNT = 2
+
+        private var override: String? = null
+
+        fun processOverride(input: String) {
+            if (!CAMPAIGN_OVERRIDE_REGEX.matches(input)) {
+                logger.error(i18n("invalid_campaign_override"))
+                return
+            }
+
+            override = input
+        }
 
         /**
          * Returns a new [Catalog] instance from given main catalog name.
@@ -20,18 +40,37 @@ data class Campaign(val year: String, val id: String) {
          * @param mainCatalogName main catalog human readable name
          * @return new catalog instance from given main catalog name
          */
-        fun fromMainCatalogName(mainCatalogName: String): Campaign {
-// FIXME: Since campaign 2020/02 the main catalog name is no longer "Katalog YYYY/CC" but just "Katalog [C]C"
-//            val rawCampaignId = mainCatalogName
-//                .split(CATALOG_DELIMITER)[1]
-//                .split(CAMPAIGN_DELIMITER)
+        fun getCurrentCampaign(mainCatalogName: String): Campaign {
+            return when {
+                override != null -> getCampaignNameFromOverride(override!!)
+                isOriginalSlashedFormat(mainCatalogName) -> getCampaignNameFromOriginalSlashedFormat(mainCatalogName)
+                isNewFormat(mainCatalogName) -> getCampaignNameFromNewFormat(mainCatalogName)
+                else -> throw IllegalArgumentException(i18n("unknown_campaign_name"))
+            }
+        }
 
-//            val year = rawCampaignId[0]
-//            val campaign = rawCampaignId[1]
+        private fun getCampaignNameFromOverride(override: String): Campaign {
+            val (year, id) = override.chunked(4)
+            return Campaign(year, id)
+        }
+
+        private fun isOriginalSlashedFormat(input: String): Boolean {
+            return CAMPAIGN_SLASHED_FORMAT_REGEX.find(input)?.groups?.size == SLASHED_FORMAT_REQUIRED_GROUPS_COUNT
+        }
+
+        private fun getCampaignNameFromOriginalSlashedFormat(input: String): Campaign {
+            val groups = CAMPAIGN_SLASHED_FORMAT_REGEX.find(input)!!.groups
+            return Campaign(year = groups[1]!!.value, id = groups[2]!!.value)
+        }
+
+        private fun isNewFormat(input: String): Boolean {
+            return CAMPAIGN_NEW_FORMAT_REGEX.find(input)?.groups?.size == NEW_FORMAT_REQUIRED_GROUPS_COUNT
+        }
+
+        private fun getCampaignNameFromNewFormat(input: String): Campaign {
+            val groups = CAMPAIGN_NEW_FORMAT_REGEX.find(input)!!.groups
             val year = Calendar.getInstance()[Calendar.YEAR].toString()
-            val campaign = mainCatalogName.split(CATALOG_DELIMITER)[1]
-
-            return Campaign(year, campaign)
+            return Campaign(year = year, id = groups[1]!!.value)
         }
     }
 }

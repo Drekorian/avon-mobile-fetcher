@@ -10,6 +10,7 @@ import org.json.JSONObject
  * @property category product category
  * @property physicalPage product page position in physical catalog
  * @property displayPage product position in mobile catalog
+ * @author Marek Osvald
  */
 class Product(data: JSONObject) {
 
@@ -18,6 +19,7 @@ class Product(data: JSONObject) {
         const val KEY_ID = "id"
         const val KEY_TITLE = "title"
         const val KEY_CATEGORY = "category"
+        @Suppress("SpellCheckingInspection") // Sic! Yes, really.
         const val KEY_PHYSICAL_PAGE = "fizical_page"
         const val KEY_DISPLAY_PAGE = "display_page"
     }

@@ -1,10 +1,26 @@
 package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.CsvPrinter
+import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
+import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
 
+/**
+ * This flow handles the main logic of the fetcher script.
+ *
+ * 1) Downloads catalogs from [CatalogsFlow].
+ * 2) Downloads products from [ProductsFlow].
+ * 3) Maps catalogs and products into [Record]s.
+ * 4) Feeds the records data into [CsvPrinter].
+ *
+ * @see CatalogsFlow
+ * @see ProductsFlow
+ * @see Record
+ * @see CsvPrinter
+ * @author Marek Osvald
+ */
 class MasterFlow {
 
     companion object {
@@ -14,13 +30,17 @@ class MasterFlow {
         private const val CAMPAIGN_ID_PADDING_START = '0'
     }
 
+
+    /**
+     * Executes this [MasterFlow].
+     */
     fun execute() {
         val catalogs = CatalogsFlow().fetchCatalogs()
 
         val mainCatalog = catalogs.first().name
-        val campaign = Campaign.fromMainCatalogName(mainCatalog)
+        val campaign = Campaign.getCurrentCampaign(mainCatalog)
 
-        val productFlow = ProductFlow()
+        val productFlow = ProductsFlow()
         val catalogWithProducts = catalogs.map { catalog ->
             catalog to productFlow.fetchProducts(catalog)
         }
@@ -29,7 +49,7 @@ class MasterFlow {
             products.mapNotNull { product ->
                 val response = ProductDetailsRequest().send(catalog, product)
                 if (response == null) {
-                    // TODO: log
+                    logger.errorI18n("product_details_response_null", catalog.id, product.id)
                     return@mapNotNull null
                 }
 
