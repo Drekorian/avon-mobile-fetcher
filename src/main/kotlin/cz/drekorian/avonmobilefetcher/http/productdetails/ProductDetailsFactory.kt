@@ -72,7 +72,7 @@ object ProductDetailsFactory {
             title = root.getElementsByTagName(ELEMENT_NAME_TITLE).item(0).textContent,
             description = root.getElementsByTagName(ELEMENT_NAME_DESCRIPTION).item(0).textContent,
             variant = root.getElementsByTagName(ELEMENT_NAME_VARIANT).item(0)?.textContent ?: "",
-            category = root.getElementsByTagName(ELEMENT_NAME_CATEGORY).item(0).textContent,
+            category = root.getElementsByTagName(ELEMENT_NAME_CATEGORY)?.item(0)?.textContent ?: "",
             sku = root.getElementsByTagName(ELEMENT_NAME_SKU).item(0).textContent,
             price = root.getElementsByTagName(ELEMENT_NAME_PRICE).item(0).textContent,
             priceStandard = root.getElementsByTagName(ELEMENT_NAME_PRICE_STANDARD).item(0).textContent,
