@@ -37,7 +37,7 @@ object KHttpClient {
     ): Response {
         val response: Response =
             khttp.get(url, headers, params, data, json, auth, cookies, timeout, allowRedirects, stream, files)
-        logger.infoI18n("request", response.request.url)
+        logger.debugI18n("request", response.request.url)
 
         val prettyResponse = when (response.text[0]) {
             '[' -> response.jsonArray.toString(INDENT_FACTOR)

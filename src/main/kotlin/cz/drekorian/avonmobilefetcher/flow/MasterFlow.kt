@@ -3,6 +3,7 @@ package cz.drekorian.avonmobilefetcher.flow
 import cz.drekorian.avonmobilefetcher.CsvPrinter
 import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
+import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
@@ -30,7 +31,6 @@ class MasterFlow {
         private const val CAMPAIGN_ID_PADDING_START = '0'
     }
 
-
     /**
      * Executes this [MasterFlow].
      */
@@ -46,6 +46,7 @@ class MasterFlow {
         }
 
         val records = catalogWithProducts.flatMap { (catalog, products) ->
+            logger.infoI18n("product_details_request", catalog.name)
             products.mapNotNull { product ->
                 val response = ProductDetailsRequest().send(catalog, product)
                 if (response == null) {
@@ -57,10 +58,12 @@ class MasterFlow {
             }
         }
 
+
         // create output file name
         val fileName = FILE_NAME.format(
             "${campaign.year}${campaign.id.padStart(CAMPAIGN_ID_LENGTH, CAMPAIGN_ID_PADDING_START)}"
         )
+        logger.infoI18n("writing_to_disk", fileName)
 
         CsvPrinter.print(
             fileName,
@@ -86,5 +89,7 @@ class MasterFlow {
             "Images",
             "Shade File"
         )
+
+        logger.infoI18n("done")
     }
 }

@@ -2,6 +2,7 @@ package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.products.ProductsRequest
+import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
@@ -21,7 +22,7 @@ class ProductsFlow {
      * @return the list of [Product]s for given [catalog]
      */
     fun fetchProducts(catalog: Catalog): List<Product> {
-
+        logger.infoI18n("products_request", catalog.name)
         val response = ProductsRequest().send(catalog.id)
         if (response == null) {
             logger.errorI18n("products_response_null", catalog.id)

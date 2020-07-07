@@ -15,7 +15,7 @@ import java.util.Calendar
 data class Campaign(val year: String, val id: String) {
 
     companion object {
-        private val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
+        val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
         @Suppress("SpellCheckingInspection")
         private val CAMPAIGN_SLASHED_FORMAT_REGEX = "Katalog ([1-9][0-9]{3})/([0-9]?[0-9])".toRegex()
         private const val SLASHED_FORMAT_REQUIRED_GROUPS_COUNT = 3

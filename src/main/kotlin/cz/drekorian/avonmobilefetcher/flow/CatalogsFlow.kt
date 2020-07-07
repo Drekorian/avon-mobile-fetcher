@@ -2,6 +2,7 @@ package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
+import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Catalog
 
@@ -28,6 +29,7 @@ class CatalogsFlow {
      * @return list of currently available catalogs
      */
     fun fetchCatalogs(): List<Catalog> {
+        logger.infoI18n("catalogs_request")
         val response = CatalogsRequest().send()
         if (response == null) {
             logger.errorI18n("catalogs_response_null")
@@ -50,6 +52,12 @@ class CatalogsFlow {
                 .toList()
 
             Catalog(id, title[index] ?: return@mapNotNull null)
+        }.also { catalogs ->
+            logger.infoI18n(
+                "catalogs_request_success",
+                catalogs.size,
+                catalogs.joinToString(separator = ", ") { catalog -> catalog.name }
+            )
         }
     }
 }
