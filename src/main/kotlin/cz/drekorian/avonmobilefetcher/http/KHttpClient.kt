@@ -1,7 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http
 
 import cz.drekorian.avonmobilefetcher.debugI18n
-import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import khttp.DEFAULT_TIMEOUT
 import khttp.responses.Response

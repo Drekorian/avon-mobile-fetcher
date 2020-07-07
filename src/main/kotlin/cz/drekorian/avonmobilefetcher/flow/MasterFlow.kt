@@ -58,7 +58,6 @@ class MasterFlow {
             }
         }
 
-
         // create output file name
         val fileName = FILE_NAME.format(
             "${campaign.year}${campaign.id.padStart(CAMPAIGN_ID_LENGTH, CAMPAIGN_ID_PADDING_START)}"

@@ -27,7 +27,7 @@ class ProductsRequest : Request() {
     fun send(catalogId: String): ProductsResponse? {
         val response: Response = KHttpClient.get(URL.format(catalogId))
 
-        if (!checkStatusCode(response, i18n("catalog_request_error").format(catalogId))) {
+        if (!checkStatusCode(response, i18n("products_request_error").format(catalogId))) {
             return null
         }
 
