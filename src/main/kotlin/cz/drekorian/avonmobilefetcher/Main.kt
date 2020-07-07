@@ -37,7 +37,7 @@ private val locale: Locale
 fun main(args: Array<String>) {
     logger = KotlinLogging.logger("main")
     I18n.resourceBundle = ResourceBundle.getBundle(I18N_RESOURCE_BUNDLE, locale)
-    logger.infoI18n("welcome", "1.0.0")
+    logger.infoI18n("welcome", "1.0.2")
 
     // process optional campaign name override
     when {
