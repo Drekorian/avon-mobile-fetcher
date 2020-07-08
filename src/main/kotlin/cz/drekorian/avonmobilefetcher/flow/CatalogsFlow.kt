@@ -43,7 +43,7 @@ class CatalogsFlow {
             .distinct()
             .toList()
 
-        return ids.withIndex().mapNotNull { (index, id) ->
+        val foundCatalogs = ids.withIndex().mapNotNull { (index, id) ->
             val title = CATALOG_NAME_REGEX
                 .findAll(response.rawHtml)
                 .asSequence()
@@ -52,12 +52,15 @@ class CatalogsFlow {
                 .toList()
 
             Catalog(id, title[index] ?: return@mapNotNull null)
-        }.also { catalogs ->
-            logger.infoI18n(
-                "catalogs_request_success",
-                catalogs.size,
-                catalogs.joinToString(separator = ", ") { catalog -> catalog.name }
-            )
         }
+
+        logger.infoI18n(
+            "catalogs_request_success",
+            foundCatalogs.size,
+            foundCatalogs.joinToString(separator = ", ") { catalog -> catalog.name }
+        )
+
+        logger.infoI18n("focus_catalog_acknowledged")
+        return foundCatalogs + Catalog.FOCUS
     }
 }

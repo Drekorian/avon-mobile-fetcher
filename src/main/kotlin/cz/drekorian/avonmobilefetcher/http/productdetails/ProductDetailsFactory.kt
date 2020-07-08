@@ -53,12 +53,11 @@ object ProductDetailsFactory {
         val root: Element = document.documentElement
 
         // add image_file to the list of images
-        val images = mutableListOf(
-            Image(
-                "${IMAGE_BASE_URL.format(catalogId)}${root.getElementsByTagName(ELEMENT_NAME_IMAGE_FILE)
-                    .item(0).textContent}"
-            )
-        )
+        val images = mutableListOf<Image>()
+        val imageFile = root.getElementsByTagName(ELEMENT_NAME_IMAGE_FILE)
+        if (imageFile.length > 0) {
+            images.add(Image("${IMAGE_BASE_URL.format(catalogId)}${imageFile.item(0).textContent}"))
+        }
 
         // add images to the list of images
         val imageElements = root.getElementsByTagName(ELEMENT_NAME_IMAGE)

@@ -7,4 +7,20 @@ package cz.drekorian.avonmobilefetcher.model
  * @property name human-readable catalog name
  * @author Marek Osvald
  */
-data class Catalog(val id: String, val name: String)
+data class Catalog(val id: String, val name: String) {
+
+    companion object {
+
+        private const val FOCUS_ID = "focus"
+        private const val FOCUS_NAME = "Focus"
+
+        /**
+         * Creates a new instance of the Focus catalog.
+         *
+         * This particular catalog is available at [https://cz.avon-brochure.com/focus] and isn't available at the
+         * brochure signpost page. It's UI layer is actually password protected. XML/JSON endpoints are not protected
+         * and are accessible just like the other catalogs.
+         */
+        val FOCUS = Catalog(FOCUS_ID, FOCUS_NAME)
+    }
+}
