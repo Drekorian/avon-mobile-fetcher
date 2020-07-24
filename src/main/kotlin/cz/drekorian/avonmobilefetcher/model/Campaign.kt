@@ -20,7 +20,7 @@ data class Campaign(val year: String, val id: String) {
         private val CAMPAIGN_SLASHED_FORMAT_REGEX = "Katalog ([1-9][0-9]{3})/([0-9]?[0-9])".toRegex()
         private const val SLASHED_FORMAT_REQUIRED_GROUPS_COUNT = 3
         @Suppress("SpellCheckingInspection")
-        private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[1-9])".toRegex()
+        private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[0-9])".toRegex()
         private const val NEW_FORMAT_REQUIRED_GROUPS_COUNT = 2
 
         private var override: String? = null
