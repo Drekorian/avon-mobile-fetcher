@@ -11,7 +11,7 @@ import java.lang.System.setProperty
 import java.util.Locale
 import java.util.ResourceBundle
 
-private const val APP_VERSION = "1.2.1"
+private const val APP_VERSION = "1.2.2"
 private const val ARGUMENT_KEY_DEBUG = "debug"
 
 /** I18n resource bundle **/
