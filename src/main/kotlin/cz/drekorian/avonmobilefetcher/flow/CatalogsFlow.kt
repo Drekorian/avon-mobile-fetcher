@@ -19,7 +19,7 @@ class CatalogsFlow {
         private val CATALOG_ID_REGEX =
             """<img class="img-responsive".* onclick="open_catalog\(.+url:'(.+)/index\.html'""".toRegex()
         private val CATALOG_NAME_REGEX =
-            """<p style="width:100%;font-size:20px;font-weight:bold;color:#ff336d;text-align:center;font-family:Arial" >(.+)</p>"""
+            """<p style="width:100%;font-size:20px;font-weight:bold;color:#7F28C4;text-align:center;font-family:Montserrat-Regular" >(.+)</p>"""
                 .toRegex()
     }
 
