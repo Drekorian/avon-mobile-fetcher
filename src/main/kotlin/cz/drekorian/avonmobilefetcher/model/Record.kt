@@ -13,7 +13,7 @@ import cz.drekorian.avonmobilefetcher.CSV_SEPARATOR
 data class Record(
     private val catalog: Catalog,
     private val product: Product,
-    private val productDetails: ProductDetails
+    private val productDetails: ProductDetails?
 ) {
 
     companion object {
@@ -34,37 +34,40 @@ data class Record(
         |${campaign.id}
         |${catalog.name}
         |${product.category}
-        |${productDetails.category}
+        |${productDetails?.category ?: ""}
         |${product.physicalPage}
-        |${productDetails.physicalPage}
+        |${productDetails?.physicalPage ?: 0}
         |${product.displayPage}
-        |${productDetails.displayPage}
+        |${productDetails?.displayPage ?: ""}
         |="${product.id.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
-        |="${productDetails.id.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
-        |="${productDetails.sku.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
+        |="${productDetails?.id?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
+        |="${productDetails?.sku?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
         |"${product.title
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
         }"
-        |"${productDetails.title
-            .replace("\"", "\"\"")
-            .lines()
-            .joinToString(separator = LINE_SEPARATOR)
+        |"${productDetails?.title
+            ?.replace("\"", "\"\"")
+            ?.lines()
+            ?.joinToString(separator = LINE_SEPARATOR)
+            ?: ""
         }"
-        |${productDetails.variant}
-        |${productDetails.price}
-        |${productDetails.priceStandard}
-        |"${productDetails.description
-            .replace("\"", "\"\"")
-            .replace(";", ",")
-            .lines()
-            .joinToString(separator = LINE_SEPARATOR)
+        |${productDetails?.variant ?: ""}
+        |${productDetails?.price ?: ""}
+        |${productDetails?.priceStandard ?: ""}
+        |"${productDetails?.description
+            ?.replace("\"", "\"\"")
+            ?.replace(";", ",")
+            ?.lines()
+            ?.joinToString(separator = LINE_SEPARATOR)
+            ?: ""
         }"
-        |"${productDetails.images.joinToString(separator = LINE_SEPARATOR) { it.url }
-            .lines()
-            .joinToString(separator = LINE_SEPARATOR)
+        |"${productDetails?.images?.joinToString(separator = LINE_SEPARATOR) { it.url }
+            ?.lines()
+            ?.joinToString(separator = LINE_SEPARATOR)
+            ?: ""
         }"
-        |${productDetails.shadeFile}"""
+        |${productDetails?.shadeFile ?: ""}"""
             .lines()
             .filterIndexed { index, _ -> index != 0 }
             .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }

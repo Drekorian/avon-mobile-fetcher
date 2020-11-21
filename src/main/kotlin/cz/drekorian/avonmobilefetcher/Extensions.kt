@@ -24,6 +24,14 @@ fun KLogger.debugI18n(key: String, vararg args: Any) = debug(i18n(key).format(*a
 fun KLogger.infoI18n(key: String, vararg args: Any) = info(i18n(key).format(*args))
 
 /**
+ * Logs a warnings to [logger], automatically uses [i18n] and argument formatting.
+ *
+ * @param key I18n key
+ * @param args formatting arguments
+ */
+fun KLogger.warnI18n(key: String, vararg args: Any) = warn(i18n(key).format(*args))
+
+/**
  * Logs an error to [logger], automatically uses [i18n] and argument formatting.
  *
  * @param key I18n key

@@ -1,12 +1,12 @@
 package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.CsvPrinter
-import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
+import cz.drekorian.avonmobilefetcher.warnI18n
 
 /**
  * This flow handles the main logic of the fetcher script.
@@ -47,14 +47,13 @@ class MasterFlow {
 
         val records = catalogWithProducts.flatMap { (catalog, products) ->
             logger.infoI18n("product_details_request", catalog.name)
-            products.mapNotNull { product ->
+            products.map { product ->
                 val response = ProductDetailsRequest().send(catalog, product)
                 if (response == null) {
-                    logger.errorI18n("product_details_response_null", catalog.id, product.id)
-                    return@mapNotNull null
+                    logger.warnI18n("product_details_response_null", catalog.id, product.id)
                 }
 
-                Record(catalog, product, response.productDetails).toCsv(campaign)
+                Record(catalog, product, response?.productDetails).toCsv(campaign)
             }
         }
 
