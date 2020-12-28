@@ -12,7 +12,7 @@ import org.json.JSONObject
  * @property displayPage product position in mobile catalog
  * @author Marek Osvald
  */
-class Product(data: JSONObject) {
+class Product {
 
     companion object {
 
@@ -22,15 +22,35 @@ class Product(data: JSONObject) {
         @Suppress("SpellCheckingInspection") // Sic! Yes, really.
         const val KEY_PHYSICAL_PAGE = "fizical_page"
         const val KEY_DISPLAY_PAGE = "display_page"
+
+        /**
+         * Constructs a new [Product] instance from given [id] and [page].
+         */
+        fun fromPageData(id: String, page: Int): Product = Product(id, page)
     }
 
-    val id: String = data.optString(KEY_ID)
+    /**
+     * Constructs a new [Product] instance from given JSON [data].
+     */
+    constructor(data: JSONObject) {
+        id = data.optString(KEY_ID)
+        title = data.optString(KEY_TITLE)
+        category = data.optInt(KEY_CATEGORY)
+        physicalPage = data.optInt(KEY_PHYSICAL_PAGE)
+        displayPage = data.optInt(KEY_DISPLAY_PAGE)
+    }
 
-    val title: String = data.optString(KEY_TITLE)
+    private constructor(id: String, page: Int) {
+        this.id = id
+        this.title = ""
+        this.category = 0
+        this.physicalPage = page
+        this.displayPage = page
+    }
 
-    val category: Int = data.optInt(KEY_CATEGORY)
-
-    val physicalPage: Int = data.optInt(KEY_PHYSICAL_PAGE)
-
-    val displayPage: Int = data.optInt(KEY_DISPLAY_PAGE)
+    val id: String
+    val title: String
+    val category: Int
+    val physicalPage: Int
+    val displayPage: Int
 }
