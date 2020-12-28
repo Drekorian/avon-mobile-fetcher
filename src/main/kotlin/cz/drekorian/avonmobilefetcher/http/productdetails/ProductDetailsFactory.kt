@@ -16,7 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory
  * @author Marek Osvald
  */
 object ProductDetailsFactory {
-    
+
     private const val ATTRIBUTE_NAME_ID = "id"
     private const val ELEMENT_NAME_TITLE = "title"
     private const val ELEMENT_NAME_IMAGE_FILE = "image_file"
@@ -37,6 +37,9 @@ object ProductDetailsFactory {
 
     private const val IMAGE_BASE_URL = "$BASE_URL/%s/common/products/images/"
     private const val SHADE_BASE_URL = "$BASE_URL/%s/common/products/shades/"
+
+    private const val LOCALIZED_DECIMAL_SEPARATOR = ','
+    private const val NORMALIZED_DECIMAL_SEPARATOR = '.'
 
     /**
      * Creates [ProductDetails] from given [xml] source and [catalogId].
@@ -73,8 +76,14 @@ object ProductDetailsFactory {
             variant = root.getElementsByTagName(ELEMENT_NAME_VARIANT).item(0)?.textContent ?: "",
             category = root.getElementsByTagName(ELEMENT_NAME_CATEGORY)?.item(0)?.textContent ?: "",
             sku = root.getElementsByTagName(ELEMENT_NAME_SKU).item(0).textContent,
-            price = root.getElementsByTagName(ELEMENT_NAME_PRICE).item(0).textContent,
-            priceStandard = root.getElementsByTagName(ELEMENT_NAME_PRICE_STANDARD).item(0).textContent,
+            price = root.getElementsByTagName(ELEMENT_NAME_PRICE).item(0).textContent.replace(
+                oldChar = LOCALIZED_DECIMAL_SEPARATOR,
+                newChar = NORMALIZED_DECIMAL_SEPARATOR
+            ),
+            priceStandard = root.getElementsByTagName(ELEMENT_NAME_PRICE_STANDARD).item(0).textContent.replace(
+                oldChar = LOCALIZED_DECIMAL_SEPARATOR,
+                newChar = NORMALIZED_DECIMAL_SEPARATOR
+            ),
             physicalPage = root.getElementsByTagName(ELEMENT_NAME_PHYSICAL_PAGE).item(0).textContent.toInt(),
             displayPage = root.getElementsByTagName(ELEMENT_NAME_DISPLAY_PAGE).item(0).textContent,
             shadeFile = root.getElementsByTagName(ELEMENT_NAME_SHADE_FILE).item(0)?.textContent?.let { shadeFile ->
