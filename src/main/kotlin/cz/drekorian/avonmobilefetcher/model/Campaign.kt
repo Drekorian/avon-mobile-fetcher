@@ -22,6 +22,8 @@ data class Campaign(val year: String, val id: String) {
         @Suppress("SpellCheckingInspection")
         private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[0-9])".toRegex()
         private const val NEW_FORMAT_REQUIRED_GROUPS_COUNT = 2
+        @Suppress("SpellCheckingInspection")
+        private const val NAMELESS_CATALOG_NAME = "katalog"
 
         private var override: String? = null
 
@@ -57,6 +59,7 @@ data class Campaign(val year: String, val id: String) {
                 override != null -> getCampaignNameFromOverride(override!!)
                 isOriginalSlashedFormat(mainCatalogName) -> getCampaignNameFromOriginalSlashedFormat(mainCatalogName)
                 isNewFormat(mainCatalogName) -> getCampaignNameFromNewFormat(mainCatalogName)
+                isNamelessFormat(mainCatalogName) -> getCampaignNameFromNamelessFormat()
                 else -> throw IllegalArgumentException(i18n("unknown_campaign_name"))
             }
         }
@@ -83,6 +86,13 @@ data class Campaign(val year: String, val id: String) {
             val groups = CAMPAIGN_NEW_FORMAT_REGEX.find(input)!!.groups
             val year = Calendar.getInstance()[Calendar.YEAR].toString()
             return Campaign(year = year, id = groups[1]!!.value)
+        }
+
+        private fun isNamelessFormat(input: String) = input == NAMELESS_CATALOG_NAME
+
+        private fun getCampaignNameFromNamelessFormat(): Campaign {
+            val calendar = Calendar.getInstance()
+            return Campaign(calendar[Calendar.YEAR].toString(), (calendar[Calendar.MONTH] + 1).toString())
         }
     }
 }
