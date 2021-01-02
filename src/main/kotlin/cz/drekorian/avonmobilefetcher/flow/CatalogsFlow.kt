@@ -17,10 +17,7 @@ class CatalogsFlow {
 
     companion object {
         private val CATALOG_ID_REGEX =
-            """<img class="img-responsive".* onclick="open_catalog\(.+url:'(.+)/index\.html'""".toRegex()
-        private val CATALOG_NAME_REGEX =
-            """<p style="width:100%;font-size:20px;font-weight:bold;color:#7F28C4;text-align:center;font-family:Montserrat-Regular" >(.+)</p>"""
-                .toRegex()
+            """onclick="open_catalog\(\{url:'(.+)/index\.html'""".toRegex()
     }
 
     /**
@@ -36,23 +33,13 @@ class CatalogsFlow {
             return emptyList()
         }
 
-        val ids = CATALOG_ID_REGEX
+        val foundCatalogs = CATALOG_ID_REGEX
             .findAll(response.rawHtml)
             .asSequence()
             .mapNotNull { it.groups[1]?.value }
             .distinct()
+            .map { id -> Catalog(id = id, name = id) }
             .toList()
-
-        val foundCatalogs = ids.withIndex().mapNotNull { (index, id) ->
-            val title = CATALOG_NAME_REGEX
-                .findAll(response.rawHtml)
-                .asSequence()
-                .map { it.groups[1]?.value?.trim() } // HTML may contain whitespace before the closing tag
-                .distinct()
-                .toList()
-
-            Catalog(id, title[index] ?: return@mapNotNull null)
-        }
 
         logger.infoI18n(
             "catalogs_request_success",

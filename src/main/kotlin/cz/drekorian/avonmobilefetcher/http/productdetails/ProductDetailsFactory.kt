@@ -84,8 +84,8 @@ object ProductDetailsFactory {
                 oldChar = LOCALIZED_DECIMAL_SEPARATOR,
                 newChar = NORMALIZED_DECIMAL_SEPARATOR
             ),
-            physicalPage = root.getElementsByTagName(ELEMENT_NAME_PHYSICAL_PAGE).item(0).textContent.toInt(),
-            displayPage = root.getElementsByTagName(ELEMENT_NAME_DISPLAY_PAGE).item(0).textContent,
+            physicalPage = root.getElementsByTagName(ELEMENT_NAME_PHYSICAL_PAGE).item(0)?.textContent?.toInt() ?: 0,
+            displayPage = root.getElementsByTagName(ELEMENT_NAME_DISPLAY_PAGE).item(0)?.textContent ?: "",
             shadeFile = root.getElementsByTagName(ELEMENT_NAME_SHADE_FILE).item(0)?.textContent?.let { shadeFile ->
                 when (shadeFile) {
                     SHADE_FILE_DEFAULT -> ""
