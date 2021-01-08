@@ -1,6 +1,7 @@
 package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.CsvPrinter
+import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsFlow
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger

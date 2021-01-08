@@ -3,6 +3,7 @@
 package cz.drekorian.avonmobilefetcher
 
 import cz.drekorian.avonmobilefetcher.flow.MasterFlow
+import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsOverride
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import mu.KLogger
 import mu.KotlinLogging
@@ -11,8 +12,11 @@ import java.lang.System.setProperty
 import java.util.Locale
 import java.util.ResourceBundle
 
-private const val APP_VERSION = "1.4.1"
+private const val APP_VERSION = "1.5.0"
 private const val ARGUMENT_KEY_DEBUG = "debug"
+private val ARGUMENT_CATALOGS = """--catalogs=[a-zA-Z]+(,[a-zA-Z]+)*""".toRegex()
+private const val ARGUMENTS_DELIMITER = '='
+private const val CATALOG_DELIMITER = ','
 
 /** I18n resource bundle **/
 private const val I18N_RESOURCE_BUNDLE = "locale"
@@ -51,6 +55,12 @@ private fun processArgs(args: Array<String>) {
     if (ARGUMENT_KEY_DEBUG in distinctArgs) {
         distinctArgs -= ARGUMENT_KEY_DEBUG
         enableDebugLogging()
+    }
+
+    distinctArgs.firstOrNull { arg -> ARGUMENT_CATALOGS.matches(arg) }?.let { arg ->
+        val catalogsOverride = arg.split(ARGUMENTS_DELIMITER)[1].split(CATALOG_DELIMITER).toList()
+        CatalogsOverride.setCatalogs(catalogsOverride)
+        distinctArgs -= arg
     }
 
     createLogger()

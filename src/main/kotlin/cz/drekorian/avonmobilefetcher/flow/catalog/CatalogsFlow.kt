@@ -1,4 +1,4 @@
-package cz.drekorian.avonmobilefetcher.flow
+package cz.drekorian.avonmobilefetcher.flow.catalog
 
 import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
@@ -26,6 +26,21 @@ class CatalogsFlow {
      * @return list of currently available catalogs
      */
     fun fetchCatalogs(): List<Catalog> {
+        val foundCatalogs = when {
+            CatalogsOverride.catalogs.isNotEmpty() -> getCatalogsFromOverride()
+            else -> getCatalogsFromSignpost()
+        }
+
+        logger.infoI18n("focus_catalog_acknowledged")
+        return foundCatalogs + Catalog.FOCUS
+    }
+
+    private fun getCatalogsFromOverride(): List<Catalog> {
+        logger.infoI18n("catalogs_override")
+        return CatalogsOverride.catalogs.map { id -> Catalog(id = id, name = id) }
+    }
+
+    private fun getCatalogsFromSignpost(): List<Catalog> {
         logger.infoI18n("catalogs_request")
         val response = CatalogsRequest().send()
         if (response == null) {
@@ -47,7 +62,6 @@ class CatalogsFlow {
             foundCatalogs.joinToString(separator = ", ") { catalog -> catalog.name }
         )
 
-        logger.infoI18n("focus_catalog_acknowledged")
-        return foundCatalogs + Catalog.FOCUS
+        return foundCatalogs
     }
 }
