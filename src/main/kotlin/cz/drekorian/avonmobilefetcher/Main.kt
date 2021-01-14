@@ -12,7 +12,7 @@ import java.lang.System.setProperty
 import java.util.Locale
 import java.util.ResourceBundle
 
-private const val APP_VERSION = "1.5.0"
+private const val APP_VERSION = "1.5.1"
 private const val ARGUMENT_KEY_DEBUG = "debug"
 private val ARGUMENT_CATALOGS = """--catalogs=[a-zA-Z]+(,[a-zA-Z]+)*""".toRegex()
 private const val ARGUMENTS_DELIMITER = '='
