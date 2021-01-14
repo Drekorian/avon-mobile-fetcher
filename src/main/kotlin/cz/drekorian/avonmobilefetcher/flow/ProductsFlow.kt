@@ -50,7 +50,7 @@ class ProductsFlow {
             val foundIds = products.map { product -> product.id }
             pageResponse.pageData.ids.forEach { id ->
                 if (id != INVALID_ID && id !in foundIds) {
-                    logger.infoI18n("page_data_new_product", page, catalog.name, id)
+                    logger.debugI18n("page_data_new_product", page, catalog.name, id)
                     products += Product.fromPageData(id, page)
                 }
             }

@@ -26,7 +26,7 @@ abstract class Request {
      */
     protected fun checkStatusCode(response: Response, errorMessage: String): Boolean {
         if (!response.isOk) {
-            logger.error("$errorMessage (${response.statusCode}) ${response.text}")
+            logger.debug("$errorMessage (${response.statusCode}) ${response.text}")
             return false
         }
 
