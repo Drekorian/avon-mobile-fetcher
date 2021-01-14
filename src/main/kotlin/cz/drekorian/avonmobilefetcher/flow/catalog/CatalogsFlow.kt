@@ -32,7 +32,7 @@ class CatalogsFlow {
         }
 
         logger.infoI18n("focus_catalog_acknowledged")
-        return foundCatalogs + Catalog.FOCUS
+        return (foundCatalogs + Catalog.FOCUS).distinctBy { catalog -> catalog.id }
     }
 
     private fun getCatalogsFromOverride(): List<Catalog> {
