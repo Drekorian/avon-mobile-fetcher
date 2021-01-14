@@ -10,6 +10,9 @@ object CatalogsOverride {
 
     val catalogs = mutableListOf<String>()
 
+    val hasOverride: Boolean
+        get() = catalogs.isNotEmpty()
+
     /**
      * Sets catalogs override.
      *

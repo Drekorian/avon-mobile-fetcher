@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.model
 
+import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsOverride
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.logger
 import java.lang.IllegalArgumentException
@@ -88,7 +89,7 @@ data class Campaign(val year: String, val id: String) {
             return Campaign(year = year, id = groups[1]!!.value)
         }
 
-        private fun isNamelessFormat(input: String) = input == NAMELESS_CATALOG_NAME
+        private fun isNamelessFormat(input: String) = input == NAMELESS_CATALOG_NAME || CatalogsOverride.hasOverride
 
         private fun getCampaignNameFromNamelessFormat(): Campaign {
             val calendar = Calendar.getInstance()
