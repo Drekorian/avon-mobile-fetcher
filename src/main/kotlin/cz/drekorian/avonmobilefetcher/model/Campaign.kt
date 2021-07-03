@@ -1,9 +1,7 @@
 package cz.drekorian.avonmobilefetcher.model
 
-import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsOverride
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.logger
-import java.lang.IllegalArgumentException
 import java.util.Calendar
 
 /**
@@ -50,18 +48,19 @@ data class Campaign(val year: String, val id: String) {
         }
 
         /**
-         * Returns a new [Catalog] instance from given main catalog name.
+         * Returns a new [Campaign] instance from given list of catalogs.
          *
-         * @param mainCatalogName main catalog human readable name
-         * @return new catalog instance from given main catalog name
+         * @param catalogs list of available catalogs
+         * @return new campaign instance from the list of available catalogs
          */
-        fun getCurrentCampaign(mainCatalogName: String): Campaign {
+        fun getCurrentCampaign(catalogs: List<Catalog>): Campaign {
+            val mainCatalogName = catalogs.find { catalog -> catalog.id == NAMELESS_CATALOG_NAME }?.name ?: ""
+
             return when {
                 override != null -> getCampaignNameFromOverride(override!!)
                 isOriginalSlashedFormat(mainCatalogName) -> getCampaignNameFromOriginalSlashedFormat(mainCatalogName)
                 isNewFormat(mainCatalogName) -> getCampaignNameFromNewFormat(mainCatalogName)
-                isNamelessFormat(mainCatalogName) -> getCampaignNameFromNamelessFormat()
-                else -> throw IllegalArgumentException(i18n("unknown_campaign_name"))
+                else -> getCampaignNameFromCurrentDate()
             }
         }
 
@@ -89,9 +88,7 @@ data class Campaign(val year: String, val id: String) {
             return Campaign(year = year, id = groups[1]!!.value)
         }
 
-        private fun isNamelessFormat(input: String) = input == NAMELESS_CATALOG_NAME || CatalogsOverride.hasOverride
-
-        private fun getCampaignNameFromNamelessFormat(): Campaign {
+        private fun getCampaignNameFromCurrentDate(): Campaign {
             val calendar = Calendar.getInstance()
             return Campaign(calendar[Calendar.YEAR].toString(), (calendar[Calendar.MONTH] + 1).toString())
         }

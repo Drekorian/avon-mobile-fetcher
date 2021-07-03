@@ -16,8 +16,8 @@ import cz.drekorian.avonmobilefetcher.model.Catalog
 class CatalogsFlow {
 
     companion object {
-        private val CATALOG_ID_REGEX =
-            """onclick="open_catalog\(\{url:'(.+)/index\.html'""".toRegex()
+        private val CATALOG_ID_REGEX = """onclick="open_catalog\(\{url: '(.+)/index\.html'""".toRegex()
+        private val CATALOG_NAME_REGEX = """<span class="my-auto">(.+)</span>""".toRegex()
     }
 
     /**
@@ -48,12 +48,13 @@ class CatalogsFlow {
             return emptyList()
         }
 
-        val foundCatalogs = CATALOG_ID_REGEX
-            .findAll(response.rawHtml)
-            .asSequence()
-            .mapNotNull { it.groups[1]?.value }
-            .distinct()
-            .map { id -> Catalog(id = id, name = id) }
+        val catalogIds = CATALOG_ID_REGEX.findAll(response.rawHtml)
+        val catalogNames = CATALOG_NAME_REGEX.findAll(response.rawHtml)
+
+        val foundCatalogs =
+            catalogIds.mapNotNull { it.groups[1]?.value }.distinct()
+            .zip(catalogNames.mapNotNull { it.groups[1]?.value }.distinct())
+            .map { (id, name) -> Catalog(id = id, name = name.trim()) }
             .toList()
 
         logger.infoI18n(

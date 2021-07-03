@@ -38,8 +38,7 @@ class MasterFlow {
     fun execute() {
         val catalogs = CatalogsFlow().fetchCatalogs()
 
-        val mainCatalog = catalogs.first().name
-        val campaign = Campaign.getCurrentCampaign(mainCatalog)
+        val campaign = Campaign.getCurrentCampaign(catalogs)
 
         val productFlow = ProductsFlow()
         val catalogWithProducts = catalogs.map { catalog ->
