@@ -4,6 +4,7 @@ import cz.drekorian.avonmobilefetcher.http.BASE_URL
 import cz.drekorian.avonmobilefetcher.http.KHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
+import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import khttp.responses.Response
 
@@ -17,20 +18,23 @@ class PageDataRequest : Request() {
 
     companion object {
 
-        private const val URL = "$BASE_URL/%s/common/data/%s.xml"
+        private const val URL = "$BASE_URL/%s/%s/common/data/%s.xml"
         private const val PAGE_DATA_PAGE_NUMBER_LENGTH = 4
         private const val PAGE_DATA_PAGE_PAD_START = '0'
     }
 
     /**
-     * Sends the request. Attempts to load page data for given [catalog] and [page].
+     * Sends the request. Attempts to load page data for given [campaign], [catalog] and [page].
      *
+     * @param campaign current campaign
+     * @param catalog selected Catalog data
+     * @param page selected catalog page
      * @return valid [PageDataResponse] instance, provided that the request has finished successfully, null
      * otherwise
      */
-    fun send(catalog: Catalog, page: Int): PageDataResponse? {
+    fun send(campaign: Campaign, catalog: Catalog, page: Int): PageDataResponse? {
         val pageNumber = page.toString().padStart(PAGE_DATA_PAGE_NUMBER_LENGTH, PAGE_DATA_PAGE_PAD_START)
-        val response: Response = KHttpClient.get(URL.format(catalog.id, pageNumber))
+        val response: Response = KHttpClient.get(URL.format(campaign.toRestfulArgument(), catalog.id, pageNumber))
 
         if (!checkStatusCode(response, i18n("page_data_request_error").format(page, catalog))) {
             return null

@@ -4,6 +4,7 @@ import cz.drekorian.avonmobilefetcher.http.BASE_URL
 import cz.drekorian.avonmobilefetcher.http.KHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
+import cz.drekorian.avonmobilefetcher.model.Campaign
 import khttp.responses.Response
 
 /**
@@ -15,17 +16,18 @@ import khttp.responses.Response
 class ProductsRequest : Request() {
 
     companion object {
-        private const val URL = "$BASE_URL/%s/common/res/products_details.json"
+        private const val URL = "$BASE_URL/%s/%s/common/res/products_details.json"
     }
 
     /**
-     * Sends the request. Attempts to load product data about a catalog with given [catalogId].
+     * Sends the request. Attempts to load product data about a catalog with given [campaign] and [catalogId].
      *
+     * @param campaign current campaign
      * @param catalogId unique catalog ID
      * @return valid [ProductsResponse] instance, provided that the request has finished successfully, null otherwise
      */
-    fun send(catalogId: String): ProductsResponse? {
-        val response: Response = KHttpClient.get(URL.format(catalogId))
+    fun send(campaign: Campaign, catalogId: String): ProductsResponse? {
+        val response: Response = KHttpClient.get(URL.format(campaign.toRestfulArgument(), catalogId))
 
         if (!checkStatusCode(response, i18n("products_request_error").format(catalogId))) {
             return null

@@ -1,6 +1,7 @@
 package cz.drekorian.avonmobilefetcher.http.productdetails
 
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
+import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Image
 import cz.drekorian.avonmobilefetcher.model.ProductDetails
 import org.w3c.dom.Element
@@ -35,8 +36,8 @@ object ProductDetailsFactory {
 
     private const val SHADE_FILE_DEFAULT = "default.jpg"
 
-    private const val IMAGE_BASE_URL = "$BASE_URL/%s/common/products/images/"
-    private const val SHADE_BASE_URL = "$BASE_URL/%s/common/products/shades/"
+    private const val IMAGE_BASE_URL = "$BASE_URL/%s/%s/common/products/images/"
+    private const val SHADE_BASE_URL = "$BASE_URL/%s/%s/common/products/shades/"
 
     private const val LOCALIZED_DECIMAL_SEPARATOR = ','
     private const val NORMALIZED_DECIMAL_SEPARATOR = '.'
@@ -44,10 +45,11 @@ object ProductDetailsFactory {
     /**
      * Creates [ProductDetails] from given [xml] source and [catalogId].
      *
+     * @param campaign current campaign identifier
      * @param xml source XML containing the product details data
      * @param catalogId catalog unique identifier
      */
-    fun createProductDetails(xml: String, catalogId: String): ProductDetails {
+    fun createProductDetails(campaign: Campaign, xml: String, catalogId: String): ProductDetails {
         val document = DocumentBuilderFactory
             .newInstance()
             .newDocumentBuilder()
@@ -59,14 +61,20 @@ object ProductDetailsFactory {
         val images = mutableListOf<Image>()
         val imageFile = root.getElementsByTagName(ELEMENT_NAME_IMAGE_FILE)
         if (imageFile.length > 0) {
-            images.add(Image("${IMAGE_BASE_URL.format(catalogId)}${imageFile.item(0).textContent}"))
+            images.add(
+                Image(
+                    "${IMAGE_BASE_URL.format(campaign.toRestfulArgument(), catalogId)}${imageFile.item(0).textContent}"
+                )
+            )
         }
 
         // add images to the list of images
         val imageElements = root.getElementsByTagName(ELEMENT_NAME_IMAGE)
-        images.addAll((0 until imageElements.length)
-            .map { index -> Image("${IMAGE_BASE_URL.format(catalogId)}${imageElements.item(index).textContent}") }
-        )
+        images.addAll((0 until imageElements.length).map { index ->
+            Image(
+                "${IMAGE_BASE_URL.format(campaign.toRestfulArgument(), catalogId)}${imageElements.item(index).textContent}"
+            )
+        })
 
         return ProductDetails(
             id = root.getAttribute(ATTRIBUTE_NAME_ID),
@@ -89,7 +97,7 @@ object ProductDetailsFactory {
             shadeFile = root.getElementsByTagName(ELEMENT_NAME_SHADE_FILE).item(0)?.textContent?.let { shadeFile ->
                 when (shadeFile) {
                     SHADE_FILE_DEFAULT -> ""
-                    else -> "${SHADE_BASE_URL.format(catalogId)}$shadeFile"
+                    else -> "${SHADE_BASE_URL.format(campaign.toRestfulArgument(), catalogId)}$shadeFile"
                 }
             } ?: ""
         )

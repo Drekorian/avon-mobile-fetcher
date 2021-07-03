@@ -6,6 +6,7 @@ import cz.drekorian.avonmobilefetcher.http.pagedata.PageDataRequest
 import cz.drekorian.avonmobilefetcher.http.products.ProductsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
+import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
 
@@ -23,14 +24,15 @@ class ProductsFlow {
     }
 
     /**
-     * Fetches the list of [Product]s for given [catalog].
+     * Fetches the list of [Product]s for given [campaign] and [catalog].
      *
+     * @param campaign current campaign
      * @param catalog for which the product should be fetched
      * @return the list of [Product]s for given [catalog]
      */
-    fun fetchProducts(catalog: Catalog): List<Product> {
+    fun fetchProducts(campaign: Campaign, catalog: Catalog): List<Product> {
         logger.infoI18n("products_request", catalog.name)
-        val response = ProductsRequest().send(catalog.id)
+        val response = ProductsRequest().send(campaign, catalog.id)
         if (response == null) {
             logger.errorI18n("products_response_null", catalog.id)
             return emptyList()
@@ -41,7 +43,7 @@ class ProductsFlow {
 
         (1..maxPage).forEach { page ->
             logger.debugI18n("page_data_request", page, catalog.name)
-            val pageResponse = PageDataRequest().send(catalog, page)
+            val pageResponse = PageDataRequest().send(campaign, catalog, page)
             if (pageResponse == null) {
                 logger.errorI18n("page_data_response_null", page, catalog.name)
                 return@forEach

@@ -43,13 +43,13 @@ class MasterFlow {
 
         val productFlow = ProductsFlow()
         val catalogWithProducts = catalogs.map { catalog ->
-            catalog to productFlow.fetchProducts(catalog)
+            catalog to productFlow.fetchProducts(campaign, catalog)
         }
 
         val records = catalogWithProducts.flatMap { (catalog, products) ->
             logger.infoI18n("product_details_request", catalog.name)
             products.map { product ->
-                val response = ProductDetailsRequest().send(catalog, product)
+                val response = ProductDetailsRequest().send(campaign, catalog, product)
                 if (response == null) {
                     logger.debugI18n("product_details_response_null", catalog.id, product.id)
                 }

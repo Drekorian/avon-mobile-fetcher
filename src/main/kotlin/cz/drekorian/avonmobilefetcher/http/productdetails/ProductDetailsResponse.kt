@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http.productdetails
 
+import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.ProductDetails
 
 /**
@@ -16,9 +17,9 @@ class ProductDetailsResponse private constructor(val productDetails: ProductDeta
     companion object {
 
         /**
-         * Creates [ProductDetailsResponse] using [ProductDetailsFactory].
+         * Creates [ProductDetailsResponse] using [Campaign] and [ProductDetailsFactory].
          */
-        fun fromXml(xml: String, catalogId: String) =
-            ProductDetailsResponse(ProductDetailsFactory.createProductDetails(xml, catalogId))
+        fun fromXml(campaign: Campaign, xml: String, catalogId: String) =
+            ProductDetailsResponse(ProductDetailsFactory.createProductDetails(campaign, xml, catalogId))
     }
 }

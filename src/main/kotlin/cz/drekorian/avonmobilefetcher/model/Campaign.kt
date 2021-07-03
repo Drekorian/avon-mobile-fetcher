@@ -96,4 +96,9 @@ data class Campaign(val year: String, val id: String) {
             return Campaign(calendar[Calendar.YEAR].toString(), (calendar[Calendar.MONTH] + 1).toString())
         }
     }
+
+    /**
+     * Returns campaign as a RESTful argument for HTTP API calls.
+     */
+    fun toRestfulArgument(): String = "c${id}_cz_$year"
 }
