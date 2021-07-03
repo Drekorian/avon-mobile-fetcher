@@ -19,6 +19,9 @@ object CatalogsOverride {
      * @param catalogs catalog IDs override
      */
     fun setCatalogs(catalogs: Collection<String>) {
-        this.catalogs.addAll(catalogs)
+        with(this.catalogs) {
+            clear()
+            addAll(catalogs)
+        }
     }
 }

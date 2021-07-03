@@ -12,9 +12,8 @@ import java.lang.System.setProperty
 import java.util.Locale
 import java.util.ResourceBundle
 
-private const val APP_VERSION = "1.5.1"
+private const val APP_VERSION = "1.6.0"
 private const val ARGUMENT_KEY_DEBUG = "debug"
-private val ARGUMENT_CATALOGS = """--catalogs=[a-zA-Z]+(,[a-zA-Z]+)*""".toRegex()
 private const val ARGUMENTS_DELIMITER = '='
 private const val CATALOG_DELIMITER = ','
 
@@ -22,6 +21,8 @@ private const val CATALOG_DELIMITER = ','
 private const val I18N_RESOURCE_BUNDLE = "locale"
 
 private val SUPPORTED_LOCALES = setOf(Locale("cs", "CZ"), Locale.UK)
+
+internal val ARGUMENT_CATALOGS = """--catalogs=[a-zA-Z]+[,a-zA-Z\-+]*""".toRegex()
 
 /** Main application logger **/
 lateinit var logger: KLogger
@@ -57,11 +58,7 @@ private fun processArgs(args: Array<String>) {
         enableDebugLogging()
     }
 
-    distinctArgs.firstOrNull { arg -> ARGUMENT_CATALOGS.matches(arg) }?.let { arg ->
-        val catalogsOverride = arg.split(ARGUMENTS_DELIMITER)[1].split(CATALOG_DELIMITER).toList()
-        CatalogsOverride.setCatalogs(catalogsOverride)
-        distinctArgs -= arg
-    }
+    processCatalogsOverride(distinctArgs)
 
     createLogger()
     logger.infoI18n("welcome", APP_VERSION)
@@ -77,6 +74,14 @@ private fun processArgs(args: Array<String>) {
 
     if (distinctArgs.isNotEmpty()) {
         logger.errorI18n("unknown_arguments", distinctArgs.joinToString(separator = ", "))
+    }
+}
+
+internal fun processCatalogsOverride(distinctArgs: MutableSet<String>) {
+    distinctArgs.firstOrNull { arg -> ARGUMENT_CATALOGS.matches(arg) }?.let { arg ->
+        val catalogsOverride = arg.split(ARGUMENTS_DELIMITER)[1].split(CATALOG_DELIMITER).toList()
+        CatalogsOverride.setCatalogs(catalogsOverride)
+        distinctArgs -= arg
     }
 }
 
