@@ -26,7 +26,7 @@ class CampaignTest {
 
         // act
         @Suppress("SpellCheckingInspection")
-        val campaign = Campaign.getCurrentCampaign("not parseable jibbersish")
+        val campaign = Campaign.getCurrentCampaign(emptyList())
 
         // assert
         assertThat(campaign.year).isEqualTo("2020")
@@ -38,7 +38,7 @@ class CampaignTest {
     @ValueSource(strings= ["Katalog 2020/01", "Katalog 2020/1", "Katalog 2020/10", "Katalog 1999/99"])
     fun `when no override with old format Campaign is properly parsed`(rawCampaign: String) {
         // act
-        val campaign = Campaign.getCurrentCampaign(rawCampaign)
+        val campaign = Campaign.getCurrentCampaign(listOf(Catalog("katalog", rawCampaign)))
 
         // assert
         val (year, id) = rawCampaign.split(" ")[1].split("/")
@@ -51,7 +51,7 @@ class CampaignTest {
     @ValueSource(strings= ["Katalog 1", "Katalog 09", "Katalog 14", "Katalog 99"])
     fun `when no override with new format Campaign is properly parsed`(rawCampaign: String) {
         // act
-        val campaign = Campaign.getCurrentCampaign(rawCampaign)
+        val campaign = Campaign.getCurrentCampaign(listOf(Catalog( "katalog", rawCampaign)))
 
         // assert
         assertThat(campaign.year).isEqualTo(Calendar.getInstance()[Calendar.YEAR].toString())

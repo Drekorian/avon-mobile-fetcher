@@ -43,6 +43,7 @@ data class Record(
         |="${productDetails?.id?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
         |="${productDetails?.sku?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
         |"${product.title
+            .replace(";", ",")
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
         }"
@@ -52,7 +53,10 @@ data class Record(
             ?.joinToString(separator = LINE_SEPARATOR)
             ?: ""
         }"
-        |${productDetails?.variant ?: ""}
+        |"${productDetails?.variant
+            ?.replace(";", ",")
+            ?: ""
+        }"
         |${productDetails?.price ?: ""}
         |${productDetails?.priceStandard ?: ""}
         |"${productDetails?.description
