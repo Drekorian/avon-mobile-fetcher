@@ -32,7 +32,7 @@ data class Record(
         """
         |${campaign.year}
         |${campaign.id}
-        |${catalog.name}
+        |${catalog.id}
         |${product.category}
         |${productDetails?.category ?: ""}
         |${product.physicalPage}

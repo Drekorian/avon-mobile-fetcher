@@ -16,17 +16,6 @@ data class Campaign(val year: String, val id: String) {
     companion object {
         val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
 
-        @Suppress("SpellCheckingInspection")
-        private val CAMPAIGN_SLASHED_FORMAT_REGEX = "Katalog ([1-9][0-9]{3})/([0-9]?[0-9])".toRegex()
-        private const val SLASHED_FORMAT_REQUIRED_GROUPS_COUNT = 3
-
-        @Suppress("SpellCheckingInspection")
-        private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[0-9])".toRegex()
-        private const val NEW_FORMAT_REQUIRED_GROUPS_COUNT = 2
-
-        @Suppress("SpellCheckingInspection")
-        private const val NAMELESS_CATALOG_NAME = "katalog"
-
         private var override: String? = null
 
         /**
@@ -56,39 +45,14 @@ data class Campaign(val year: String, val id: String) {
          * @param catalogs list of available catalogs
          * @return new campaign instance from the list of available catalogs
          */
-        fun getCurrentCampaign(catalogs: List<Catalog>): Campaign {
-            val mainCatalogName = catalogs.find { catalog -> catalog.id == NAMELESS_CATALOG_NAME }?.name ?: ""
-
-            return when {
-                override != null -> getCampaignNameFromOverride(override!!)
-                isOriginalSlashedFormat(mainCatalogName) -> getCampaignNameFromOriginalSlashedFormat(mainCatalogName)
-                isNewFormat(mainCatalogName) -> getCampaignNameFromNewFormat(mainCatalogName)
-                else -> getCampaignNameFromCurrentDate()
-            }
+        fun getCurrentCampaign(catalogs: List<Catalog>): Campaign = when (val catalogOverride = override) {
+            null -> getCampaignNameFromCurrentDate()
+            else -> getCampaignNameFromOverride(catalogOverride)
         }
 
         private fun getCampaignNameFromOverride(override: String): Campaign {
             val (year, id) = override.chunked(4)
             return Campaign(year, id)
-        }
-
-        private fun isOriginalSlashedFormat(input: String): Boolean {
-            return CAMPAIGN_SLASHED_FORMAT_REGEX.find(input)?.groups?.size == SLASHED_FORMAT_REQUIRED_GROUPS_COUNT
-        }
-
-        private fun getCampaignNameFromOriginalSlashedFormat(input: String): Campaign {
-            val groups = CAMPAIGN_SLASHED_FORMAT_REGEX.find(input)!!.groups
-            return Campaign(year = groups[1]!!.value, id = groups[2]!!.value)
-        }
-
-        private fun isNewFormat(input: String): Boolean {
-            return CAMPAIGN_NEW_FORMAT_REGEX.find(input)?.groups?.size == NEW_FORMAT_REQUIRED_GROUPS_COUNT
-        }
-
-        private fun getCampaignNameFromNewFormat(input: String): Campaign {
-            val groups = CAMPAIGN_NEW_FORMAT_REGEX.find(input)!!.groups
-            val year = Calendar.getInstance()[Calendar.YEAR].toString()
-            return Campaign(year = year, id = groups[1]!!.value)
         }
 
         private fun getCampaignNameFromCurrentDate(): Campaign {

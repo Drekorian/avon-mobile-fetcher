@@ -53,11 +53,11 @@ class MasterFlowTest {
         """
 
         private val PRODUCT_DETAILS_FIRST_CSV: String = """
-            2020;01;Katalog 01/2020;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129.90;359.90;"Test description";"https://cz.avon-brochure.com/c01_cz_2020/katalog/common/products/images/prod_5519795_1_613x613.jpg";
+            2020;01;katalog;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129.90;359.90;"Test description";"https://cz.avon-brochure.com/c01_cz_2020/katalog/common/products/images/prod_5519795_1_613x613.jpg";
         """.trimIndent()
 
         private val PRODUCT_DETAILS_SECOND_CSV: String = """
-            2020;01;Katalog 01/2020;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";
+            2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";
         """.trimIndent()
     }
 
@@ -65,7 +65,7 @@ class MasterFlowTest {
     fun `product records are properly serialized for both valid an null product details`() {
         // arrange
         val campaign = Campaign("2020", "01")
-        val catalog = Catalog("katalog", "Katalog 01/2020")
+        val catalog = Catalog("katalog")
 
         val products = listOf<Product>(
             Json.decodeFromString(PRODUCT_FIRST_RAW),

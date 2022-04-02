@@ -47,7 +47,7 @@ class MasterFlow {
         }
 
         val records = catalogWithProducts.flatMap { (catalog, products) ->
-            logger.infoI18n("product_details_request", catalog.name)
+            logger.infoI18n("product_details_request", catalog)
             products.map { product ->
                 val response = try {
                     runBlocking { ProductDetailsRequest().send(campaign, catalog, product) }

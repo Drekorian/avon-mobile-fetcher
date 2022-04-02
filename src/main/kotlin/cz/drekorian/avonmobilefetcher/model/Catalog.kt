@@ -4,15 +4,13 @@ package cz.drekorian.avonmobilefetcher.model
  * This data class stores values about the Catalog.
  *
  * @property id unique identifier of the catalog
- * @property name human-readable catalog name
  * @author Marek Osvald
  */
-data class Catalog(val id: String, val name: String) {
+data class Catalog(val id: String) {
 
     companion object {
 
         private const val FOCUS_ID = "focus"
-        private const val FOCUS_NAME = "Focus"
 
         /**
          * Creates a new instance of the Focus catalog.
@@ -21,6 +19,6 @@ data class Catalog(val id: String, val name: String) {
          * brochure signpost page. It's UI layer is actually password protected. XML/JSON endpoints are not protected
          * and are accessible just like the other catalogs.
          */
-        val FOCUS = Catalog(FOCUS_ID, FOCUS_NAME)
+        val FOCUS = Catalog(FOCUS_ID)
     }
 }
