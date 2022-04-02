@@ -27,11 +27,11 @@ class CatalogsFlow {
      * @return list of currently available catalogs
      */
     fun fetchCatalogs(): List<Catalog> {
-        val foundCatalogs = when {
-            CatalogsOverride.catalogs.isNotEmpty() -> getCatalogsFromOverride()
-            else -> getCatalogsFromSignpost()
+        if (CatalogsOverride.catalogs.isNotEmpty()) {
+            return getCatalogsFromOverride()
         }
 
+        val foundCatalogs = getCatalogsFromSignpost()
         logger.infoI18n("focus_catalog_acknowledged")
         return (foundCatalogs + Catalog.FOCUS).distinctBy { catalog -> catalog.id }
     }
