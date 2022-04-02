@@ -15,12 +15,15 @@ data class Campaign(val year: String, val id: String) {
 
     companion object {
         val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
+
         @Suppress("SpellCheckingInspection")
         private val CAMPAIGN_SLASHED_FORMAT_REGEX = "Katalog ([1-9][0-9]{3})/([0-9]?[0-9])".toRegex()
         private const val SLASHED_FORMAT_REQUIRED_GROUPS_COUNT = 3
+
         @Suppress("SpellCheckingInspection")
         private val CAMPAIGN_NEW_FORMAT_REGEX = "Katalog ([0-9]?[0-9])".toRegex()
         private const val NEW_FORMAT_REQUIRED_GROUPS_COUNT = 2
+
         @Suppress("SpellCheckingInspection")
         private const val NAMELESS_CATALOG_NAME = "katalog"
 
@@ -90,7 +93,7 @@ data class Campaign(val year: String, val id: String) {
 
         private fun getCampaignNameFromCurrentDate(): Campaign {
             val calendar = Calendar.getInstance()
-            return Campaign(calendar[Calendar.YEAR].toString(), (calendar[Calendar.MONTH] + 1).toString())
+            return Campaign(calendar[Calendar.YEAR].toString(), "%02d".format(calendar[Calendar.MONTH] + 1))
         }
     }
 

@@ -1,6 +1,7 @@
 package cz.drekorian.avonmobilefetcher.http
 
 import cz.drekorian.avonmobilefetcher.logger
+import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 
@@ -18,15 +19,16 @@ abstract class Request {
         get() = status == HttpStatusCode.OK
 
     /**
-     * Returns true provided that given [Response] has not returned 200 OK status code. Otherwise, returns false
+     * Returns true provided that given [HttpResponse] has not returned 200 OK status code. Otherwise, returns false
      * and prints the [errorMessage] to the [logger].
      *
      * @param response HTTP response
      * @param errorMessage error message to print when the response is not OK
      * @return true, provided that response has 200 OK status code, false otherwise
      */
-    protected fun checkStatusCode(response: HttpResponse, errorMessage: String): Boolean {
+    protected suspend fun checkStatusCode(response: HttpResponse, errorMessage: String): Boolean {
         if (!response.isOk) {
+            logger.debug("$errorMessage (${response.status}) ${response.receive<String>()}")
             return false
         }
 
