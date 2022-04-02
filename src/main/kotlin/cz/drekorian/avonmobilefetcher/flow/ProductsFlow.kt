@@ -9,6 +9,7 @@ import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
+import kotlinx.coroutines.runBlocking
 
 /**
  * This flow fetches the list of products for given catalog.
@@ -32,18 +33,18 @@ class ProductsFlow {
      */
     fun fetchProducts(campaign: Campaign, catalog: Catalog): List<Product> {
         logger.infoI18n("products_request", catalog.name)
-        val response = ProductsRequest().send(campaign, catalog.id)
+        val response = runBlocking { ProductsRequest().send(campaign, catalog.id) }
         if (response == null) {
             logger.errorI18n("products_response_null", catalog.id)
             return emptyList()
         }
 
         val products = response.products.toMutableList()
-        val maxPage = products.maxByOrNull { it.physicalPage }!!.physicalPage
+        val maxPage = products.maxOf { it.physicalPage }
 
         (1..maxPage).forEach { page ->
             logger.debugI18n("page_data_request", page, catalog.name)
-            val pageResponse = PageDataRequest().send(campaign, catalog, page)
+            val pageResponse = runBlocking { PageDataRequest().send(campaign, catalog, page) }
             if (pageResponse == null) {
                 logger.errorI18n("page_data_response_null", page, catalog.name)
                 return@forEach

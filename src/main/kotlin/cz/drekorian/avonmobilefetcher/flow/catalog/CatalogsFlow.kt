@@ -5,6 +5,7 @@ import cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Catalog
+import kotlinx.coroutines.runBlocking
 
 /**
  * This flow attempts to fetch the list of catalog from the Brochure backend.
@@ -42,7 +43,7 @@ class CatalogsFlow {
 
     private fun getCatalogsFromSignpost(): List<Catalog> {
         logger.infoI18n("catalogs_request")
-        val response = CatalogsRequest().send()
+        val response = runBlocking { CatalogsRequest().send() }
         if (response == null) {
             logger.errorI18n("catalogs_response_null")
             return emptyList()

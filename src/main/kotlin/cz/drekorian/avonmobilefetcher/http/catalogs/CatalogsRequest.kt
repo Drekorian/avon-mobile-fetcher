@@ -1,10 +1,11 @@
 package cz.drekorian.avonmobilefetcher.http.catalogs
 
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
-import cz.drekorian.avonmobilefetcher.http.KHttpClient
+import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
-import khttp.responses.Response
+import io.ktor.client.call.receive
+import io.ktor.client.statement.HttpResponse
 
 /**
  * This request fetches the data from [BASE_URL] (mobile catalog signpost).
@@ -23,13 +24,13 @@ class CatalogsRequest : Request() {
      *
      * @return valid [CatalogsResponse] instance, provided that the request has finished successfully, null otherwise
      */
-    fun send(): CatalogsResponse? {
-        val response: Response = KHttpClient.get(url = URL)
+    suspend fun send(): CatalogsResponse? {
+        val response: HttpResponse = KtorHttpClient.get(url = URL)
 
         if (!checkStatusCode(response, i18n("catalogs_request_error"))) {
             return null
         }
 
-        return CatalogsResponse(response.text)
+        return CatalogsResponse(response.receive())
     }
 }

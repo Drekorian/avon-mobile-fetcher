@@ -1,8 +1,7 @@
 package cz.drekorian.avonmobilefetcher.http.products
 
 import cz.drekorian.avonmobilefetcher.model.Product
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.serialization.Serializable
 
 /**
  * This class holds the list of products of a catalog.
@@ -12,7 +11,7 @@ import org.json.JSONObject
  * @see ProductsRequest
  * @author Marek Osvald
  */
-class ProductsResponse(data: JSONArray) {
-
-    val products: List<Product> = data.map { productRaw -> Product(productRaw as JSONObject) }
-}
+@Serializable
+data class ProductsResponse(
+    val products: List<Product>,
+)

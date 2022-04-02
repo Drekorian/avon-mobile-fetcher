@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test
 
 internal class MainTest {
 
-   @Suppress("SpellCheckingInspection")
+    @Suppress("SpellCheckingInspection")
     @Test
     fun `common parameter names are valid`() {
         val commonNames = listOf("katalog", "darkovy-katalog", "plet", "focus", "distillery")
         val catalogsParameter = "--catalogs=${commonNames.joinToString(separator = ",")}"
 
-       processCatalogsOverride(distinctArgs = mutableSetOf(catalogsParameter))
-       assert(CatalogsOverride.catalogs.sorted() == commonNames.sorted())
+        processCatalogsOverride(distinctArgs = mutableSetOf(catalogsParameter))
+        assert(CatalogsOverride.catalogs.sorted() == commonNames.sorted())
 
-       CatalogsOverride.setCatalogs(emptyList())
+        CatalogsOverride.setCatalogs(emptyList())
     }
 }

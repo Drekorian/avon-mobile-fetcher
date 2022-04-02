@@ -1,12 +1,13 @@
 package cz.drekorian.avonmobilefetcher.http.productdetails
 
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
-import cz.drekorian.avonmobilefetcher.http.KHttpClient
+import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
+import io.ktor.client.call.receive
 
 /**
  * This request attempt to load product details for given product.
@@ -29,13 +30,13 @@ class ProductDetailsRequest : Request() {
      * @return valid [ProductDetailsResponse] instance, provided that the request has finished successfully, null
      * otherwise
      */
-    fun send(campaign: Campaign, catalog: Catalog, product: Product): ProductDetailsResponse? {
-        val response = KHttpClient.get(URL.format(campaign.toRestfulArgument(), catalog.id, product.id))
+    suspend fun send(campaign: Campaign, catalog: Catalog, product: Product): ProductDetailsResponse? {
+        val response = KtorHttpClient.get(URL.format(campaign.toRestfulArgument(), catalog.id, product.id))
 
         if (!checkStatusCode(response, i18n("product_details_request_error"))) {
             return null
         }
 
-        return ProductDetailsResponse.fromXml(campaign, response.text, catalog.id)
+        return ProductDetailsResponse.fromXml(campaign, response.receive(), catalog.id)
     }
 }

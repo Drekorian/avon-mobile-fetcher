@@ -1,12 +1,13 @@
 package cz.drekorian.avonmobilefetcher.http.pagedata
 
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
-import cz.drekorian.avonmobilefetcher.http.KHttpClient
+import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
-import khttp.responses.Response
+import io.ktor.client.call.receive
+import io.ktor.client.statement.HttpResponse
 
 /**
  * This request attempt to load the list of products for given page of a given catalog.
@@ -32,14 +33,14 @@ class PageDataRequest : Request() {
      * @return valid [PageDataResponse] instance, provided that the request has finished successfully, null
      * otherwise
      */
-    fun send(campaign: Campaign, catalog: Catalog, page: Int): PageDataResponse? {
+    suspend fun send(campaign: Campaign, catalog: Catalog, page: Int): PageDataResponse? {
         val pageNumber = page.toString().padStart(PAGE_DATA_PAGE_NUMBER_LENGTH, PAGE_DATA_PAGE_PAD_START)
-        val response: Response = KHttpClient.get(URL.format(campaign.toRestfulArgument(), catalog.id, pageNumber))
+        val response: HttpResponse = KtorHttpClient.get(URL.format(campaign.toRestfulArgument(), catalog.id, pageNumber))
 
         if (!checkStatusCode(response, i18n("page_data_request_error").format(page, catalog))) {
             return null
         }
 
-        return PageDataResponse.fromXml(page, response.text)
+        return PageDataResponse.fromXml(page, response.receive())
     }
 }

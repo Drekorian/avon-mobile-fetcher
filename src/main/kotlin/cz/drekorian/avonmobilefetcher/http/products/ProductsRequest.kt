@@ -1,11 +1,13 @@
 package cz.drekorian.avonmobilefetcher.http.products
 
 import cz.drekorian.avonmobilefetcher.http.BASE_URL
-import cz.drekorian.avonmobilefetcher.http.KHttpClient
+import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
-import khttp.responses.Response
+import cz.drekorian.avonmobilefetcher.model.Product
+import io.ktor.client.call.receive
+import io.ktor.client.statement.HttpResponse
 
 /**
  * This request attempts to load a list of products for a given catalog.
@@ -26,13 +28,13 @@ class ProductsRequest : Request() {
      * @param catalogId unique catalog ID
      * @return valid [ProductsResponse] instance, provided that the request has finished successfully, null otherwise
      */
-    fun send(campaign: Campaign, catalogId: String): ProductsResponse? {
-        val response: Response = KHttpClient.get(URL.format(campaign.toRestfulArgument(), catalogId))
+    suspend fun send(campaign: Campaign, catalogId: String): ProductsResponse? {
+        val response: HttpResponse = KtorHttpClient.get(URL.format(campaign.toRestfulArgument(), catalogId))
 
         if (!checkStatusCode(response, i18n("products_request_error").format(catalogId))) {
             return null
         }
 
-        return ProductsResponse(response.jsonArray)
+        return ProductsResponse(response.receive())
     }
 }

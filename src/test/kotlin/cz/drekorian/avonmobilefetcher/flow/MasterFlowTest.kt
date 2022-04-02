@@ -2,8 +2,9 @@ package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsResponse
 import cz.drekorian.avonmobilefetcher.model.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.assertj.core.api.Assertions.assertThat
-import org.json.JSONObject
 import org.junit.jupiter.api.Test
 
 /**
@@ -20,18 +21,18 @@ class MasterFlowTest {
         {
             "id": "12345",
             "title": "Test Product 1",
-            "category": 0,
+            "category": "0",
             "fizical_page": 42,
-            "display_page": 42
+            "display_page": "42"
         }"""
 
         private const val PRODUCT_SECOND_RAW = """
         {
                 "id": "54321",
                 "title": "Test Product 2",
-                "category": 1,
+                "category": "1",
                 "fizical_page": 68,
-                "display_page": 68
+                "display_page": "68"
             }
         """
 
@@ -65,9 +66,10 @@ class MasterFlowTest {
         // arrange
         val campaign = Campaign("2020", "01")
         val catalog = Catalog("katalog", "Katalog 01/2020")
-        val products = listOf(
-            Product(JSONObject(PRODUCT_FIRST_RAW)),
-            Product((JSONObject(PRODUCT_SECOND_RAW)))
+
+        val products = listOf<Product>(
+            Json.decodeFromString(PRODUCT_FIRST_RAW),
+            Json.decodeFromString(PRODUCT_SECOND_RAW),
         )
 
         // act

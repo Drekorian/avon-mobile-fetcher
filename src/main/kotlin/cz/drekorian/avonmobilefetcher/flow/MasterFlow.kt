@@ -8,6 +8,7 @@ import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
+import kotlinx.coroutines.runBlocking
 
 /**
  * This flow handles the main logic of the fetcher script.
@@ -48,7 +49,12 @@ class MasterFlow {
         val records = catalogWithProducts.flatMap { (catalog, products) ->
             logger.infoI18n("product_details_request", catalog.name)
             products.map { product ->
-                val response = ProductDetailsRequest().send(campaign, catalog, product)
+                val response = try {
+                    runBlocking { ProductDetailsRequest().send(campaign, catalog, product) }
+                } catch (_: Exception) {
+                    null
+                }
+                
                 if (response == null) {
                     logger.debugI18n("product_details_response_null", catalog.id, product.id)
                 }
