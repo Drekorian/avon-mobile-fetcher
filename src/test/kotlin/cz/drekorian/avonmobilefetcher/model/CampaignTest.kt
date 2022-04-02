@@ -22,8 +22,7 @@ class CampaignTest {
         Campaign.processOverride("202001")
 
         // act
-        @Suppress("SpellCheckingInspection")
-        val campaign = Campaign.getCurrentCampaign(emptyList())
+        val campaign = Campaign.getCurrentCampaign()
 
         // assert
         assertThat(campaign.year).isEqualTo("2020")

@@ -58,7 +58,7 @@ class CatalogsFlow {
         logger.infoI18n(
             "catalogs_request_success",
             foundCatalogs.size,
-            foundCatalogs.joinToString(separator = ", ")
+            foundCatalogs.joinToString(separator = ", ") { catalog -> catalog.id }
         )
 
         return foundCatalogs

@@ -32,7 +32,7 @@ class ProductsFlow {
      * @return the list of [Product]s for given [catalog]
      */
     fun fetchProducts(campaign: Campaign, catalog: Catalog): List<Product> {
-        logger.infoI18n("products_request", catalog)
+        logger.infoI18n("products_request", catalog.id)
         val response = runBlocking { ProductsRequest().send(campaign, catalog.id) }
         if (response == null) {
             logger.errorI18n("products_response_null", catalog.id)
@@ -43,17 +43,17 @@ class ProductsFlow {
         val maxPage = products.maxOf { it.physicalPage }
 
         (1..maxPage).forEach { page ->
-            logger.debugI18n("page_data_request", page, catalog)
+            logger.debugI18n("page_data_request", page, catalog.id)
             val pageResponse = runBlocking { PageDataRequest().send(campaign, catalog, page) }
             if (pageResponse == null) {
-                logger.errorI18n("page_data_response_null", page, catalog)
+                logger.errorI18n("page_data_response_null", page, catalog.id)
                 return@forEach
             }
 
             val foundIds = products.map { product -> product.id }
             pageResponse.pageData.ids.forEach { id ->
                 if (id != INVALID_ID && id !in foundIds) {
-                    logger.debugI18n("page_data_new_product", page, catalog, id)
+                    logger.debugI18n("page_data_new_product", page, catalog.id, id)
                     products += Product.fromPageData(id, page)
                 }
             }

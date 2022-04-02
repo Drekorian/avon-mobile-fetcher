@@ -40,12 +40,11 @@ data class Campaign(val year: String, val id: String) {
         }
 
         /**
-         * Returns a new [Campaign] instance from given list of catalogs.
+         * Returns current [Campaign] instance.
          *
-         * @param catalogs list of available catalogs
-         * @return new campaign instance from the list of available catalogs
+         * @return current campaign instance
          */
-        fun getCurrentCampaign(catalogs: List<Catalog>): Campaign = when (val catalogOverride = override) {
+        fun getCurrentCampaign(): Campaign = when (val catalogOverride = override) {
             null -> getCampaignNameFromCurrentDate()
             else -> getCampaignNameFromOverride(catalogOverride)
         }
@@ -62,7 +61,7 @@ data class Campaign(val year: String, val id: String) {
     }
 
     /**
-     * Returns campaign as a RESTful argument for HTTP API calls.
+     * Returns campaign as a Restful argument for HTTP API calls.
      */
     fun toRestfulArgument(): String = "c${id}_cz_$year"
 }
