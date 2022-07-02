@@ -5,8 +5,7 @@ import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
-import cz.drekorian.avonmobilefetcher.model.Product
-import io.ktor.client.call.receive
+import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 
 /**
@@ -18,7 +17,7 @@ import io.ktor.client.statement.HttpResponse
 class ProductsRequest : Request() {
 
     companion object {
-        private const val URL = "$BASE_URL/%s/%s/common/res/products_details.json"
+        private const val URL = "$BASE_URL/%s/%s/common/feed/publication_products.json"
     }
 
     /**
@@ -35,6 +34,6 @@ class ProductsRequest : Request() {
             return null
         }
 
-        return ProductsResponse(response.receive())
+        return ProductsResponse(response.body())
     }
 }

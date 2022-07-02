@@ -7,6 +7,7 @@ import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
+import io.ktor.client.call.body
 import io.ktor.client.call.receive
 
 /**
@@ -18,7 +19,7 @@ import io.ktor.client.call.receive
 class ProductDetailsRequest : Request() {
 
     companion object {
-        private const val URL = "$BASE_URL/%s/%s/common/products/xml/%s.xml"
+        private const val URL = "$BASE_URL/%s/%s/common/feed/products/%s.json"
     }
 
     /**
@@ -37,6 +38,6 @@ class ProductDetailsRequest : Request() {
             return null
         }
 
-        return ProductDetailsResponse.fromXml(campaign, response.receive(), catalog.id)
+        return ProductDetailsResponse(response.body())
     }
 }

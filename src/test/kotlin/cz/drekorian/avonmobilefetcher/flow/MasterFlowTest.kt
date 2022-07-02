@@ -1,6 +1,5 @@
 package cz.drekorian.avonmobilefetcher.flow
 
-import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsResponse
 import cz.drekorian.avonmobilefetcher.model.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -37,28 +36,35 @@ class MasterFlowTest {
         """
 
         private const val PRODUCT_FIRST_DETAILS_RAW: String = """
-            <product id="12345">
-                <image_file><![CDATA[prod_5519795_1_613x613.jpg]]></image_file>
-                <title><![CDATA[Test product 1]]></title>
-                <description><![CDATA[Test description]]></description>
-                <variant><![CDATA[]]></variant>
-                <category><![CDATA[Test Category]]></category>
-                <sku><![CDATA[12345]]></sku>
-                <price><![CDATA[129,90]]></price>
-                <price_standard><![CDATA[359,90]]></price_standard>
-                <fizical_page><![CDATA[68]]></fizical_page>
-                <display_page><![CDATA[68]]></display_page>
-                <shade_file><![CDATA[default.jpg]]></shade_file>
-            </product>
+            {
+                "category": "Test Category",
+                "description": "Test description",
+                "fsc": "1234567",
+                "sku": "12345",
+                "price_standard": "359",
+                "title": "Test product 1",
+                "concept_code": "9876543",
+                "price": "129",
+                "unit_measure": "ml",
+                "unit_number": "250",
+                "variant": "",
+                "display_page": "68",
+                "fizical_page": 68,
+                "image_file": "cz/c07_cz_2022/prod_1226821_1_613x613.jpg?v=1654862200",
+                "images": ["cz/c07_cz_2022/prod_1226821_1_613x613.jpg?v=1654862200"],
+                "shade_file":"default-shade.jpg?v=1621934601"
+            }
         """
 
         private val PRODUCT_DETAILS_FIRST_CSV: String = """
-            2020;01;katalog;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129.90;359.90;"Test description";"https://cz.avon-brochure.com/c01_cz_2020/katalog/common/products/images/prod_5519795_1_613x613.jpg";
+            2020;01;katalog;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129;359;"Test description";"https://media.ce.avon.digital-catalogue.com/cz/c07_cz_2022/prod_1226821_1_613x613.jpg?v=1654862200";
         """.trimIndent()
 
         private val PRODUCT_DETAILS_SECOND_CSV: String = """
             2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";
         """.trimIndent()
+
+        private val json = Json { ignoreUnknownKeys = true }
     }
 
     @Test
@@ -68,14 +74,14 @@ class MasterFlowTest {
         val catalog = Catalog("katalog")
 
         val products = listOf<Product>(
-            Json.decodeFromString(PRODUCT_FIRST_RAW),
-            Json.decodeFromString(PRODUCT_SECOND_RAW),
+            json.decodeFromString(PRODUCT_FIRST_RAW),
+            json.decodeFromString(PRODUCT_SECOND_RAW),
         )
 
         // act
         val records = products.withIndex().map { (index, product) ->
             val productDetails: ProductDetails? = when (index) {
-                0 -> ProductDetailsResponse.fromXml(campaign, PRODUCT_FIRST_DETAILS_RAW, "katalog").productDetails
+                0 -> json.decodeFromString<ProductDetails>(PRODUCT_FIRST_DETAILS_RAW)
                 else -> null
             }
 

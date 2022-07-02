@@ -1,6 +1,7 @@
 package cz.drekorian.avonmobilefetcher.http
 
 import cz.drekorian.avonmobilefetcher.logger
+import io.ktor.client.call.body
 import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -28,7 +29,7 @@ abstract class Request {
      */
     protected suspend fun checkStatusCode(response: HttpResponse, errorMessage: String): Boolean {
         if (!response.isOk) {
-            logger.debug("$errorMessage (${response.status}) ${response.receive<String>()}")
+            logger.debug("$errorMessage (${response.status}) ${response.body<String>()}")
             return false
         }
 
