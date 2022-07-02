@@ -66,7 +66,7 @@ data class Record(
             ?.joinToString(separator = LINE_SEPARATOR)
             ?: ""
         }"
-        |"${productDetails?.images?.joinToString(separator = LINE_SEPARATOR) { it.url }
+        |"${productDetails?.images?.joinToString(separator = LINE_SEPARATOR)
             ?.lines()
             ?.joinToString(separator = LINE_SEPARATOR)
             ?: ""

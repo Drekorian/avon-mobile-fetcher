@@ -1,5 +1,8 @@
 package cz.drekorian.avonmobilefetcher.model
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
+
 /**
  * This data class stores product details.
  *
@@ -17,17 +20,30 @@ package cz.drekorian.avonmobilefetcher.model
  * @property shadeFile shade image file for products with multiple shades
  * @author Marek Osvald
  */
+@Serializable
 data class ProductDetails(
-    val id: String,
-    val images: List<Image>,
-    val title: String,
-    val description: String,
-    val variant: String,
     val category: String,
-    val sku: String,
+    val description: String,
+    @JsonNames("sku") val id: String,
+    @JsonNames("price_standard") val priceStandard: String,
+    val title: String,
     val price: String,
-    val priceStandard: String,
-    val physicalPage: Int,
-    val displayPage: String,
-    val shadeFile: String
-)
+    val variant: String,
+    @JsonNames("display_page") val displayPage: String = "",
+    @JsonNames("fizical_page") val physicalPage: Int = 0,
+    @JsonNames("image_file") private val _imageFile: String,
+    @JsonNames("images") private val _images: List<String>,
+    val shadeFile: String = "",
+) {
+    companion object {
+
+        private const val IMAGE_BASE_URL = "https://media.ce.avon.digital-catalogue.com"
+    }
+
+    // TODO (marek.osvald): duplicate in order to keep the existing format, subject to be removed
+    val sku: String
+        get() = id
+
+    val images: List<String>
+        get() = (listOf(_imageFile) + _images).distinct().map { image -> "$IMAGE_BASE_URL/$image" }
+}

@@ -2,15 +2,15 @@ package cz.drekorian.avonmobilefetcher.http
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logging
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 /**
@@ -25,8 +25,8 @@ object KtorHttpClient {
             level = LogLevel.BODY
             logger = HttpLogger
         }
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(
+        install(ContentNegotiation) {
+            json(
                 Json {
                     ignoreUnknownKeys = true
                     isLenient = true

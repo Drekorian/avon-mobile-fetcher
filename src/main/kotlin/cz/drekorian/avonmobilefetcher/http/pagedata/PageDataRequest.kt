@@ -6,6 +6,7 @@ import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
+import io.ktor.client.call.body
 import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 
@@ -41,6 +42,6 @@ class PageDataRequest : Request() {
             return null
         }
 
-        return PageDataResponse.fromXml(page, response.receive())
+        return PageDataResponse.fromXml(page, response.body())
     }
 }

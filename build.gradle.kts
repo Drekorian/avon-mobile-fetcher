@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "1.8.0"
+version = "1.9.0"
 
 repositories {
     mavenCentral()
@@ -17,10 +17,12 @@ repositories {
 @Suppress("SpellCheckingInspection")
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
-    implementation("io.ktor:ktor-client-cio:2.0.2")
-    implementation("io.ktor:ktor-client-core:2.0.2")
-    implementation("io.ktor:ktor-client-logging:2.0.2")
-    implementation("io.ktor:ktor-client-serialization:2.0.2")
+    implementation("io.ktor:ktor-client-cio:2.0.3")
+    implementation("io.ktor:ktor-client-content-negotiation:2.0.3")
+    implementation("io.ktor:ktor-client-core:2.0.3")
+    implementation("io.ktor:ktor-client-logging:2.0.3")
+    implementation("io.ktor:ktor-client-serialization:2.0.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.3")
     implementation("io.github.microutils:kotlin-logging:2.1.23")
     implementation("org.slf4j", "slf4j-simple", "1.7.25")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")

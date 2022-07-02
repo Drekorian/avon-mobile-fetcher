@@ -4,7 +4,7 @@ import cz.drekorian.avonmobilefetcher.http.BASE_URL
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.i18n
-import io.ktor.client.call.receive
+import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 
 /**
@@ -31,6 +31,6 @@ class CatalogsRequest : Request() {
             return null
         }
 
-        return CatalogsResponse(response.receive())
+        return CatalogsResponse(response.body())
     }
 }

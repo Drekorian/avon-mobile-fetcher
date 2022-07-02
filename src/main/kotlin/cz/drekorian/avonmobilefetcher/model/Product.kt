@@ -15,7 +15,7 @@ import kotlinx.serialization.json.JsonNames
  */
 @Serializable
 data class Product constructor(
-    val id: String,
+    @JsonNames("sku") val id: String,
     val title: String,
     val category: String? = "",
     @Suppress("SpellCheckingInspection")
@@ -35,7 +35,6 @@ data class Product constructor(
     private constructor(id: String, page: Int) : this(
         id = id,
         title = "",
-        //category = "",
         physicalPage = page,
         displayPage = "$page",
     )
