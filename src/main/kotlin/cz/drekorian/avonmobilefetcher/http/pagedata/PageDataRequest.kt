@@ -7,7 +7,6 @@ import cz.drekorian.avonmobilefetcher.i18n
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import io.ktor.client.call.body
-import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 
 /**

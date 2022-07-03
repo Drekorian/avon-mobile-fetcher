@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
  * 1) Downloads catalogs from [CatalogsFlow].
  * 2) Downloads products from [ProductsFlow].
  * 3) Maps catalogs and products into [Record]s.
- * 4) Feeds the records data into [CsvPrinter].
+ * 4) Feeds the records' data into [CsvPrinter].
  *
  * @see CatalogsFlow
  * @see ProductsFlow
@@ -91,7 +91,9 @@ class MasterFlow {
             "Price Standard",
             "Description",
             "Images",
-            "Shade File"
+            "Shade File",
+            "Unit Volume",
+            "Unit Measure",
         )
 
         logger.infoI18n("done")

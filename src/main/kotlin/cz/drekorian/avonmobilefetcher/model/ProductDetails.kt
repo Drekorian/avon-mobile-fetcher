@@ -6,17 +6,19 @@ import kotlinx.serialization.json.JsonNames
 /**
  * This data class stores product details.
  *
- * @property id unique product identifier
- * @property images a list of image of the product
- * @property title name of the product
- * @property description localized description of the product
- * @property variant a variant of the product in case there is one
  * @property category human-readable category of the product
- * @property sku unique stock-taking unit
- * @property price localized current price
+ * @property description localized description of the product
+ * @property id unique product identifier
  * @property priceStandard localized normal price (without any sales)
- * @property physicalPage location in the printed brochure
+ * @property title name of the product
+ * @property price localized current price
+ * @property unitMeasure product measurement units (e.g., "g", "ml")
+ * @property unitNumber product measurement volume
+ * @property variant a variant of the product in case there is one
  * @property displayPage location in the digital brochure
+ * @property physicalPage location in the printed brochure
+ * @property sku unique stock-taking unit
+ * @property images a list of image of the product
  * @property shadeFile shade image file for products with multiple shades
  * @author Marek Osvald
  */
@@ -28,12 +30,15 @@ data class ProductDetails(
     @JsonNames("price_standard") val priceStandard: String,
     val title: String,
     val price: String,
+    @JsonNames("unit_measure") val unitMeasure: String,
+    @JsonNames("unit_number") val unitNumber: String,
     val variant: String,
     @JsonNames("display_page") val displayPage: String = "",
+    @Suppress("SpellCheckingInspection")
     @JsonNames("fizical_page") val physicalPage: Int = 0,
     @JsonNames("image_file") private val _imageFile: String,
     @JsonNames("images") private val _images: List<String>,
-    val shadeFile: String = "",
+    @JsonNames("shade_file") private val _shadeFile: String = "",
 ) {
     companion object {
 
@@ -46,4 +51,9 @@ data class ProductDetails(
 
     val images: List<String>
         get() = (listOf(_imageFile) + _images).distinct().map { image -> "$IMAGE_BASE_URL/$image" }
+
+    val shadeFile: String
+        get() = _shadeFile.takeIf { shadeFile -> shadeFile.isNotEmpty() }
+            ?.let { shadeFile -> "$IMAGE_BASE_URL/$shadeFile" }
+            ?: ""
 }

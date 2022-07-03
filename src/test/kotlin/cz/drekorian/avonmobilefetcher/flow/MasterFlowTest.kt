@@ -57,11 +57,11 @@ class MasterFlowTest {
         """
 
         private val PRODUCT_DETAILS_FIRST_CSV: String = """
-            2020;01;katalog;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129;359;"Test description";"https://media.ce.avon.digital-catalogue.com/cz/c07_cz_2022/prod_1226821_1_613x613.jpg?v=1654862200";
+            2020;01;katalog;0;Test Category;42;68;42;68;="12345";="12345";="12345";"Test Product 1";"Test product 1";"";129;359;"Test description";"https://media.ce.avon.digital-catalogue.com/cz/c07_cz_2022/prod_1226821_1_613x613.jpg?v=1654862200";"https://media.ce.avon.digital-catalogue.com/default-shade.jpg?v=1621934601";="250";ml
         """.trimIndent()
 
         private val PRODUCT_DETAILS_SECOND_CSV: String = """
-            2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";
+            2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";"";="";
         """.trimIndent()
 
         private val json = Json { ignoreUnknownKeys = true }
