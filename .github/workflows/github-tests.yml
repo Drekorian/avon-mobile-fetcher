@@ -1,0 +1,14 @@
+name: GitHub Unit Tests
+on: [push]
+jobs:
+  Github-Unit-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Running tests
+        run: chmod +x gradlew && ./gradlew test
