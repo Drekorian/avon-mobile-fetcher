@@ -26,7 +26,7 @@ class CatalogsFlow {
      * @return list of currently available catalogs
      */
     fun fetchCatalogs(): List<Catalog> {
-        if (CatalogsOverride.catalogs.isNotEmpty()) {
+        if (CatalogsOverride.hasOverride) {
             return getCatalogsFromOverride()
         }
 

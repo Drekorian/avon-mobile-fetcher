@@ -14,7 +14,7 @@ import java.util.Calendar
 data class Campaign(val year: String, val id: String) {
 
     companion object {
-        val CAMPAIGN_OVERRIDE_REGEX = "[1-9][0-9]{3}[0-9][1-9]".toRegex()
+        val CAMPAIGN_OVERRIDE_REGEX = """[1-9]\d{3}\d[1-9]""".toRegex()
 
         private var override: String? = null
 

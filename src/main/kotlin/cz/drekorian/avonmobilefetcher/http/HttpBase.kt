@@ -7,6 +7,3 @@ package cz.drekorian.avonmobilefetcher.http
 
 /** Default base URL for all mobile brochure endpoints. **/
 internal const val BASE_URL = "https://cz.avon-brochure.com"
-
-/** JSON indenting factor **/
-const val INDENT_FACTOR = 4

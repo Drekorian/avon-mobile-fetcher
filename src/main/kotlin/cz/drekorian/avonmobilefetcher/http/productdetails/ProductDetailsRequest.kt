@@ -8,7 +8,6 @@ import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
 import io.ktor.client.call.body
-import io.ktor.client.call.receive
 
 /**
  * This request attempt to load product details for given product.

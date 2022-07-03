@@ -71,7 +71,9 @@ data class Record(
             ?.joinToString(separator = LINE_SEPARATOR)
             ?: ""
         }"
-        |${productDetails?.shadeFile ?: ""}"""
+        |"${productDetails?.shadeFile ?: ""}"
+        |="${productDetails?.unitNumber ?: ""}"
+        |${productDetails?.unitMeasure ?: ""}"""
             .lines()
             .filterIndexed { index, _ -> index != 0 }
             .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }

@@ -20,7 +20,6 @@ object PageDataFactory {
     fun createPageData(page: Int, xml: String): PageData {
         val ids = ID_REGEX
             .findAll(xml)
-            .asSequence()
             .mapNotNull { it.groups[1]?.value }
             .toList()
 

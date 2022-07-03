@@ -29,6 +29,7 @@ fun KLogger.infoI18n(key: String, vararg args: Any) = info(i18n(key).format(*arg
  * @param key I18n key
  * @param args formatting arguments
  */
+@Suppress("unused")
 fun KLogger.warnI18n(key: String, vararg args: Any) = warn(i18n(key).format(*args))
 
 /**
