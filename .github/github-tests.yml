@@ -1,0 +1,12 @@
+name: GitHub Unit Tests
+on: [push]
+jobs:
+  Github-Unit-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running Unit tests"
+      - name: Check out repository code
+        run: echo "Checking out repository ${{ github.repository }}"
+        uses: actions/checkout@v3
+      - name: Running tests
+        run: gradlew test
