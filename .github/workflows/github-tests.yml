@@ -1,8 +1,8 @@
-name: GitHub Unit Tests
-on: [push]
+name: GitHub JVM Unit Tests
+on: [ push ]
 jobs:
   GitHub-Unit-Tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -10,5 +10,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+      - name: Install libcurl with pacman
+        run: C:\msys64\usr\bin\pacman -S curl --noconfirm
+      - name: List MSYS2 lib
+        run: ls -l /mingw64/lib
+        shell: "msys2 {0}"
+      - name: List MSYS2 bin
+        run: ls -l /mingw64/bin
+        shell: "msys2 {0}"
       - name: Running tests
-        run: chmod +x gradlew && ./gradlew test
+        run: |
+           $Env:PATH += "C:\msys64\mingw64\bin;$Env:PATH"
+           .\gradlew allTests
