@@ -2,12 +2,12 @@ import org.gradle.jvm.tasks.Jar
 
 plugins {
     java
-    kotlin("multiplatform") version "1.7.0"
-    kotlin("plugin.serialization") version "1.7.0"
+    kotlin("multiplatform") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -68,14 +68,14 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:2.0.3")
                 implementation("io.ktor:ktor-client-serialization:2.0.3")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
             }
         }
 
         @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
             }
         }
 
@@ -93,8 +93,8 @@ kotlin {
             dependencies {
                 implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
                 implementation("io.ktor:ktor-client-cio:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.3")
-                implementation("org.slf4j:slf4j-simple:1.7.25")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.4")
+                implementation("org.slf4j:slf4j-simple:1.7.36")
             }
         }
 

@@ -6,7 +6,7 @@ import cz.drekorian.avonmobilefetcher.model.Campaign
 import mu.KLogger
 import mu.KotlinLogging
 
-private const val APP_VERSION = "2.0.0"
+private const val APP_VERSION = "2.1.0"
 private const val ARGUMENT_KEY_DEBUG = "debug"
 private const val ARGUMENTS_DELIMITER = '='
 private const val CATALOG_DELIMITER = ','
