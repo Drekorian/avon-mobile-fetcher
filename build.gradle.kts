@@ -68,7 +68,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:2.0.3")
                 implementation("io.ktor:ktor-client-serialization:2.0.3")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
             }
         }
 
@@ -93,8 +93,8 @@ kotlin {
             dependencies {
                 implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
                 implementation("io.ktor:ktor-client-cio:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.3")
-                implementation("org.slf4j:slf4j-simple:1.7.25")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.4")
+                implementation("org.slf4j:slf4j-simple:1.7.36")
             }
         }
 
