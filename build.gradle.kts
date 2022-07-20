@@ -93,7 +93,7 @@ kotlin {
             dependencies {
                 implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
                 implementation("io.ktor:ktor-client-cio:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.4")
                 implementation("org.slf4j:slf4j-simple:1.7.25")
             }
         }
