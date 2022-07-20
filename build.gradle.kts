@@ -2,12 +2,12 @@ import org.gradle.jvm.tasks.Jar
 
 plugins {
     java
-    kotlin("multiplatform") version "1.7.0"
-    kotlin("plugin.serialization") version "1.7.0"
+    kotlin("multiplatform") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -75,7 +75,7 @@ kotlin {
         @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
             }
         }
 
