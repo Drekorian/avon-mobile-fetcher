@@ -68,7 +68,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:2.0.3")
                 implementation("io.ktor:ktor-client-serialization:2.0.3")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
             }
         }
 
