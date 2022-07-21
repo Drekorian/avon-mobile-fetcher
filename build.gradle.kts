@@ -1,9 +1,17 @@
 import org.gradle.jvm.tasks.Jar
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     java
-    kotlin("multiplatform") version "1.7.10"
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("multiplatform") version libs.versions.kotlin.get()
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
+    alias(libs.plugins.buildConfig)
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.square.kotlinPoet)
+    }
 }
 
 group = "cz.drekorian.avonmobilefetcher"
@@ -11,6 +19,12 @@ version = "2.1.0"
 
 repositories {
     mavenCentral()
+}
+
+buildConfig {
+    packageName(group.toString())
+    buildConfigField("String", "appVersion", provider { """"$version"""" })
+    useKotlinOutput()
 }
 
 kotlin {
