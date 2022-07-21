@@ -1,23 +1,30 @@
 [versions]
 
-ktorVersion = "2.0.3"
-kotlinVersion = "1.7.10"
-kotlinLoggingVersion = "2.1.23"
-kotlinxCoroutinesVersion = "1.6.4"
-sj4jVersion = "1.7.36"
+buildConfig = "3.1.0"
+kotlin = "1.7.10"
+kotlinLogging = "2.1.23"
+kotlinxCoroutines = "1.6.4"
+ktor = "2.0.3"
+sj4j = "1.7.36"
+squareKotlinPoet = "1.12.0"
 
 [libraries]
 
-kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLoggingVersion" }
-kotlin-logging-jvm = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlinLoggingVersion" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinVersion" }
-ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorVersion" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
-ktor-client-curl = { module = "io.ktor:ktor-client-curl", version.ref = "ktorVersion" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
-ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorVersion" }
-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesVersion" }
-kotlinx-coroutines-sl4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "kotlinxCoroutinesVersion" }
-sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4jVersion" }
+kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
+kotlin-logging-jvm = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlinLogging" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-sl4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "kotlinxCoroutines" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-curl = { module = "io.ktor:ktor-client-curl", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }
+square-kotlinPoet = { module = "com.squareup:kotlinpoet", version.ref = "squareKotlinPoet" }
+
+[plugins]
+
+buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }

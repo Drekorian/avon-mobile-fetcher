@@ -6,7 +6,6 @@ import cz.drekorian.avonmobilefetcher.model.Campaign
 import mu.KLogger
 import mu.KotlinLogging
 
-private const val APP_VERSION = "2.1.0"
 private const val ARGUMENT_KEY_DEBUG = "debug"
 private const val ARGUMENTS_DELIMITER = '='
 private const val CATALOG_DELIMITER = ','
@@ -38,7 +37,7 @@ private fun processArgs(args: Array<String>) {
     processCatalogsOverride(distinctArgs)
 
     createLogger()
-    logger.infoI18n("welcome", APP_VERSION)
+    logger.infoI18n("welcome", BuildConfig.appVersion)
 
     when (val override = distinctArgs.firstOrNull { argument -> Campaign.CAMPAIGN_OVERRIDE_REGEX.matches(argument) }) {
         null -> logger.infoI18n("override_off")
