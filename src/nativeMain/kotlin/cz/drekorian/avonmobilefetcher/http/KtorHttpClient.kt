@@ -5,10 +5,8 @@ import io.ktor.client.engine.curl.Curl
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.parameter
-import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -32,16 +30,8 @@ actual object KtorHttpClient {
     }
 
     actual suspend fun get(
-        url: String,
-        headers: Map<String, String?>,
-        params: Map<String, String>
+        builder: HttpRequestBuilder.() -> Unit,
     ): HttpResponse = client.get {
-        url(url)
-        headers.entries.forEach { (key, value) ->
-            header(key, value)
-        }
-        params.entries.forEach { (key, value) ->
-            parameter(key, value)
-        }
+        builder.invoke(this)
     }
 }

@@ -1,14 +1,15 @@
 package cz.drekorian.avonmobilefetcher.http.productdetails
 
-import cz.drekorian.avonmobilefetcher.http.BASE_URL
+import cz.drekorian.avonmobilefetcher.http.BASE_HOST
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
-import cz.drekorian.avonmobilefetcher.nFormat
 import cz.drekorian.avonmobilefetcher.resources.i18n
 import io.ktor.client.call.body
+import io.ktor.http.URLProtocol
+import io.ktor.http.appendPathSegments
 
 /**
  * This request attempt to load product details for given product.
@@ -17,10 +18,6 @@ import io.ktor.client.call.body
  * @author Marek Osvald
  */
 class ProductDetailsRequest : Request() {
-
-    companion object {
-        private const val URL = "$BASE_URL/%s/%s/common/feed/products/%s.json"
-    }
 
     /**
      * Sends the request. Attempts to load data product details for given [campaign], [catalog] and [product].
@@ -32,7 +29,20 @@ class ProductDetailsRequest : Request() {
      * otherwise
      */
     suspend fun send(campaign: Campaign, catalog: Catalog, product: Product): ProductDetailsResponse? {
-        val response = KtorHttpClient.get(URL.nFormat(campaign.toRestfulArgument(), catalog.id, product.id))
+        val response = KtorHttpClient.get {
+            url {
+                protocol = URLProtocol.HTTPS
+                host = BASE_HOST
+                appendPathSegments(
+                    campaign.toRestfulArgument(),
+                    catalog.id,
+                    "common",
+                    "feed",
+                    "products",
+                    "${product.id}.json"
+                )
+            }
+        }
 
         if (!checkStatusCode(response, i18n("product_details_request_error"))) {
             return null
