@@ -5,5 +5,5 @@
  */
 package cz.drekorian.avonmobilefetcher.http
 
-/** Default base URL for all mobile brochure endpoints. **/
-internal const val BASE_URL = "https://cz.avon-brochure.com"
+/** Default base host for all mobile brochure endpoints. **/
+internal const val BASE_HOST = "cz.avon-brochure.com"
