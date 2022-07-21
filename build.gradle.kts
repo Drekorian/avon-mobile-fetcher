@@ -62,20 +62,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.github.microutils:kotlin-logging:2.1.23")
-                implementation("io.ktor:ktor-client-content-negotiation:2.0.3")
-                implementation("io.ktor:ktor-client-core:2.0.3")
-                implementation("io.ktor:ktor-client-logging:2.0.3")
-                implementation("io.ktor:ktor-client-serialization:2.0.3")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation(libs.kotlin.logging)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.contentNegotiation)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.serialization)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
 
         @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
+                implementation(libs.kotlin.test)
             }
         }
 
@@ -83,7 +83,7 @@ kotlin {
         val nativeMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation("io.ktor:ktor-client-curl:2.0.3")
+                implementation(libs.ktor.client.curl)
             }
         }
 
@@ -91,10 +91,10 @@ kotlin {
         val jvmMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
-                implementation("io.ktor:ktor-client-cio:2.0.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.4")
-                implementation("org.slf4j:slf4j-simple:1.7.36")
+                implementation(libs.kotlin.logging.jvm)
+                implementation(libs.kotlinx.coroutines.sl4j)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.sl4j.simple)
             }
         }
 
