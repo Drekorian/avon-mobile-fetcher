@@ -20,4 +20,4 @@ jobs:
         run: |
           $env:MINGWX64_HOME = "D:\msys64\mingw64"
           $env:PATH = $env:MINGWX64_HOME + "\bin;" + $Env:PATH
-          .\gradlew assemble fatJar allTests
+          .\gradlew assemble allTests

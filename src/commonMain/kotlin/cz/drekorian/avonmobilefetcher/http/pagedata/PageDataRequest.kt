@@ -41,7 +41,7 @@ class PageDataRequest : Request() {
             url {
                 protocol = URLProtocol.HTTPS
                 host = BASE_HOST
-                appendPathSegments(campaign.toRestfulArgument(), catalog.id, "common", "data", pageNumber)
+                appendPathSegments(campaign.toRestfulArgument(), catalog.id, "common", "data", "$pageNumber.xml")
             }
         }
 
