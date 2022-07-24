@@ -5,6 +5,7 @@ kotlin = "1.7.10"
 kotlinLogging = "2.1.23"
 kotlinxCoroutines = "1.6.4"
 ktor = "2.0.3"
+shadow = "7.1.2"
 sj4j = "1.7.36"
 squareKotlinPoet = "1.12.0"
 
@@ -28,3 +29,4 @@ square-kotlinPoet = { module = "com.squareup:kotlinpoet", version.ref = "squareK
 [plugins]
 
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

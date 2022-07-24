@@ -1,4 +1,5 @@
-import org.gradle.jvm.tasks.Jar
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -6,6 +7,7 @@ plugins {
     kotlin("multiplatform") version libs.versions.kotlin.get()
     kotlin("plugin.serialization") version libs.versions.kotlin.get()
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.shadow)
 }
 
 buildscript {
@@ -29,32 +31,28 @@ buildConfig {
 
 kotlin {
     jvm {
-        tasks.withType<Jar>().forEach { jarTask -> jarTask.enabled = false }
-        compilations {
-            val main = getByName("main")
+        compilations.named("main") {
             tasks {
-                register<Copy>("unzip") {
+                register<ShadowJar>("shadowJarJvm") {
                     group = "build"
-                    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-                    val targetDir = File(buildDir, "3rd-libs")
-                    project.delete(files(targetDir))
-                    main.compileDependencyFiles.forEach {
-                        from(zipTree(it))
-                        into(targetDir)
-                    }
-                }
-                register<Jar>("fatJar") {
-                    group = "library"
+                    from(output)
+                    configurations = listOf(runtimeDependencyFiles)
+
+                    archiveBaseName.set(rootProject.name)
+                    archiveClassifier.set("")
+                    archiveVersion.set("${project.version}")
+                    archiveAppendix.set("all")
+
                     manifest {
-                        attributes("Main-Class" to "cz.drekorian.avonmobilefetcher.MainKt")
+                        attributes("Main-Class" to "${project.group}.MainKt")
                     }
-                    archiveBaseName.set("${project.name}-fat")
-                    val thirdLibsDir = File(buildDir, "3rd-libs")
-                    from(main.output.classesDirs, thirdLibsDir)
-                    with(jar.get() as CopySpec)
+                    mergeServiceFiles()
+                }.also { shadowJar ->
+                    getByName("${targetName}Jar") {
+                        finalizedBy(shadowJar)
+                    }
                 }
             }
-            tasks.getByName("fatJar").dependsOn("unzip")
         }
     }
 
@@ -67,8 +65,13 @@ kotlin {
 
         binaries {
             executable {
-                baseName = "avon-mobile-fetcher-$version"
-                entryPoint = "cz.drekorian.avonmobilefetcher.main"
+                val appendix = when (buildType) {
+                    NativeBuildType.DEBUG -> "-debug"
+                    else -> ""
+                }
+
+                baseName = "${rootProject.name}$appendix-$version"
+                entryPoint = "${project.group}.main"
             }
         }
     }
