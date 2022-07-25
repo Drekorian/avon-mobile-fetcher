@@ -2,7 +2,11 @@ package cz.drekorian.avonmobilefetcher
 
 import cz.drekorian.avonmobilefetcher.flow.MasterFlow
 import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsOverride
+import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
+import cz.drekorian.avonmobilefetcher.http.login.LoginRequest
+import cz.drekorian.avonmobilefetcher.http.validate.ValidationRequest
 import cz.drekorian.avonmobilefetcher.model.Campaign
+import kotlinx.coroutines.runBlocking
 import mu.KLogger
 import mu.KotlinLogging
 

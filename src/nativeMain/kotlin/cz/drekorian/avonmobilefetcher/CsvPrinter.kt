@@ -1,16 +1,13 @@
 package cz.drekorian.avonmobilefetcher
 
+import cz.drekorian.avonmobilefetcher.multiplatform.CFile
 import kotlinx.cinterop.ByteVar
-import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.cValuesOf
 import kotlinx.cinterop.sizeOf
-import platform.posix.FILE
 import platform.posix.fclose
 import platform.posix.fopen
 import platform.posix.fprintf
 import platform.posix.fwrite
-
-private typealias CFile = CPointer<FILE>
 
 /**
  * This class writes Excel-compatible CSV files into a given file path.

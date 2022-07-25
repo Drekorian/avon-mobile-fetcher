@@ -13,7 +13,8 @@ import cz.drekorian.avonmobilefetcher.CSV_SEPARATOR
 data class Record(
     private val catalog: Catalog,
     private val product: Product,
-    private val productDetails: ProductDetails?
+    private val productDetails: ProductDetails?,
+    private val validation: Validation?,
 ) {
 
     companion object {
@@ -73,7 +74,8 @@ data class Record(
         }"
         |"${productDetails?.shadeFile ?: ""}"
         |="${productDetails?.unitNumber ?: ""}"
-        |${productDetails?.unitMeasure ?: ""}"""
+        |${productDetails?.unitMeasure ?: ""}
+        |="${validation?.result ?: ""}""""
             .lines()
             .filterIndexed { index, _ -> index != 0 }
             .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }

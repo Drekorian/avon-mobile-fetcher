@@ -21,6 +21,7 @@ object ResourcesCz : Resources {
         "products_request" to "Stahuji produkty katalogu %s.",
         "products_request_error" to "Stahovani katalogu %s selhalo.",
         "products_response_null" to "Stahovani produktu pro katalog: %s selhalo. Server vratil null.",
+        "loaded_line_numbers" to "Nacetl jsem %s znamych kodu vyrobku",
         "product_details_request" to "Stahuji detaily produktu pro katalog %s.",
         "product_details_request_error" to "Stahovani produktu selhalo.",
         "product_details_response_null" to "Stahovani produktu pro katalog: %s, produkt: %s selhalo. Server vratil null.",

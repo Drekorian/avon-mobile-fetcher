@@ -11,6 +11,7 @@ data class Catalog(val id: String) {
     companion object {
 
         private const val FOCUS_ID = "focus"
+        private const val NONE_ID = "none"
 
         /**
          * Creates a new instance of the Focus catalog.
@@ -20,5 +21,6 @@ data class Catalog(val id: String) {
          * and are accessible just like the other catalogs.
          */
         val FOCUS = Catalog(FOCUS_ID)
+        val NONE = Catalog(NONE_ID)
     }
 }
