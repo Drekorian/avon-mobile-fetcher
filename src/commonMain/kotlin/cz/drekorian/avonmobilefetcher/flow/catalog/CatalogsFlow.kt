@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 class CatalogsFlow {
 
     companion object {
-        private val CATALOG_ID_REGEX = """onclick="open_catalog\(\{url: '(.+)/index\.html'""".toRegex()
+        private val CATALOG_ID_REGEX = """onclick="open_catalog\(\{url: '(.+)/'""".toRegex()
     }
 
     /**
