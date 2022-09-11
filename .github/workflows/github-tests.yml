@@ -21,3 +21,10 @@ jobs:
           $env:MINGWX64_HOME = "D:\msys64\mingw64"
           $env:PATH = $env:MINGWX64_HOME + "\bin;" + $Env:PATH
           .\gradlew assemble allTests
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            build/libs/avon-mobile-fetcher-all-*.jar
+            build/bin/native/releaseExecutable/*.exe
