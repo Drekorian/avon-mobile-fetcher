@@ -2,7 +2,7 @@
 
 buildConfig = "3.1.0"
 kotlin = "1.7.22"
-kotlinLogging = "3.0.4"
+kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.6.4"
 ktor = "2.2.3"
 shadow = "7.1.2"
