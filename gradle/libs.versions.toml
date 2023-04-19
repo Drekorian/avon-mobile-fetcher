@@ -7,7 +7,6 @@ kotlinxCoroutines = "1.6.4"
 ktor = "2.2.4"
 shadow = "8.1.1"
 sj4j = "2.0.7"
-squareKotlinPoet = "1.13.0"
 
 [libraries]
 
@@ -24,7 +23,6 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }
-square-kotlinPoet = { module = "com.squareup:kotlinpoet", version.ref = "squareKotlinPoet" }
 
 [plugins]
 

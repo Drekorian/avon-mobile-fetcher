@@ -10,12 +10,6 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-buildscript {
-    dependencies {
-        classpath(libs.square.kotlinPoet)
-    }
-}
-
 group = "cz.drekorian.avonmobilefetcher"
 version = "2.2.0"
 
