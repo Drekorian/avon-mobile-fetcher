@@ -14,12 +14,13 @@ jobs:
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
+          update: true
           install: mingw-w64-x86_64-curl
           location: D:\
       - name: Running tests
         run: |
           $env:MINGWX64_HOME = "D:\msys64\mingw64"
-          $env:PATH = $env:MINGWX64_HOME + "\bin;" + $Env:PATH
+          del $env:MINGWX64_HOME\lib\libiconv*
           .\gradlew assemble allTests
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
