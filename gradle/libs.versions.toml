@@ -1,6 +1,6 @@
 [versions]
 
-buildConfig = "3.1.0"
+buildConfig = "4.0.2"
 kotlin = "1.8.20"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.6.4"
