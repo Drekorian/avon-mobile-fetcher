@@ -1,7 +1,7 @@
 [versions]
 
 buildConfig = "4.0.2"
-kotlin = "1.8.20"
+kotlin = "1.8.21"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.6.4"
 ktor = "2.3.0"
