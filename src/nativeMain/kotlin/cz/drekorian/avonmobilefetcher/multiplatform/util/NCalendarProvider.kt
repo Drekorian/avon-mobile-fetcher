@@ -1,6 +1,7 @@
 package cz.drekorian.avonmobilefetcher.multiplatform.util
 
 import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArray
 import kotlinx.cinterop.cValuesOf
 import kotlinx.cinterop.memScoped
@@ -9,6 +10,7 @@ import kotlinx.cinterop.toKString
 import platform.posix.ctime_s
 import platform.posix.time
 
+@OptIn(ExperimentalForeignApi::class)
 actual object NCalendarProvider {
 
     private const val INDEX_MONTH = 1
