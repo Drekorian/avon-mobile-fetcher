@@ -4,14 +4,17 @@ import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.cValuesOf
 import kotlinx.cinterop.sizeOf
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.posix.FILE
 import platform.posix.fclose
 import platform.posix.fopen
 import platform.posix.fprintf
 import platform.posix.fwrite
 
+@OptIn(ExperimentalForeignApi::class)
 private typealias CFile = CPointer<FILE>
 
+@OptIn(ExperimentalForeignApi::class)
 actual object CsvPrinter {
 
     actual fun print(filePath: String, data: Iterable<String>, vararg header: String) {
@@ -30,6 +33,6 @@ actual object CsvPrinter {
 
     private fun CFile.writeBom() {
         val bom = cValuesOf(0xef.toByte(), 0xbb.toByte(), 0xbf.toByte())
-        fwrite(bom, sizeOf<ByteVar>().toULong(), 3, this)
+        fwrite(bom, sizeOf<ByteVar>().toULong(), 3.toULong(), this)
     }
 }
