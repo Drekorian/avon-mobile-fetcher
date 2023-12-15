@@ -1,7 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     java
     kotlin("multiplatform") version libs.versions.kotlin.get()
@@ -11,7 +10,7 @@ plugins {
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "2.2.0"
+version = "2.3.0"
 
 repositories {
     mavenCentral()
@@ -50,7 +49,7 @@ kotlin {
         }
     }
 
-    mingwX64("native").apply {
+    mingwX64().apply {
         compilations.forEach { compilation ->
             compilation.kotlinOptions.freeCompilerArgs = mutableListOf(
                 "-linker-options", "-L${System.getenv("MINGWX64_HOME")}\\lib"
@@ -59,57 +58,42 @@ kotlin {
 
         binaries {
             executable {
-                val appendix = when (buildType) {
-                    NativeBuildType.DEBUG -> "-debug"
-                    else -> ""
+                baseName = buildString {
+                    append(rootProject.name)
+                    if (buildType == NativeBuildType.DEBUG) {
+                        append("-debug")
+                    }
+                    append("-$version")
                 }
-
-                baseName = "${rootProject.name}$appendix-$version"
                 entryPoint = "${project.group}.main"
             }
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.kotlin.logging)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.ktor.client.contentNegotiation)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.serialization)
-                implementation(libs.ktor.serialization.kotlinx.json)
-            }
+        commonMain.get().dependencies {
+            implementation(libs.kotlin.logging)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.contentNegotiation)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
 
-        @Suppress("UNUSED_VARIABLE")
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.get().dependencies {
+            implementation(libs.kotlin.test)
         }
 
-        @Suppress("UNUSED_VARIABLE")
-        val nativeMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.ktor.client.curl)
-            }
+        jvmMain.get().dependencies {
+            implementation(libs.kotlin.logging.jvm)
+            implementation(libs.kotlinx.coroutines.sl4j)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.sl4j.simple)
         }
 
-        @Suppress("UNUSED_VARIABLE")
-        val jvmMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.kotlin.logging.jvm)
-                implementation(libs.kotlinx.coroutines.sl4j)
-                implementation(libs.ktor.client.cio)
-                implementation(libs.sl4j.simple)
-            }
+        nativeMain.get().dependencies {
+            implementation(libs.ktor.client.curl)
         }
-
-        @Suppress("UNUSED_VARIABLE")
-        val nativeTest by getting
     }
 }
