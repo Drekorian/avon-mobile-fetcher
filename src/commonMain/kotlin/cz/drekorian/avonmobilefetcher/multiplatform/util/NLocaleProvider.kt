@@ -1,21 +1,13 @@
 package cz.drekorian.avonmobilefetcher.multiplatform.util
 
 /**
- * This class provides [NLocale] instances.
- *
- * @author Marek Osvald
+ * Locale representing English (United Kingdom).
  */
-expect object NLocaleProvider {
+expect val UK: NLocale
 
-    /**
-     * Locale representing English (United Kingdom).
-     */
-    val UK: NLocale
-
-    /**
-     * Returns user selected locale.
-     *
-     * @return user selected locale
-     */
-    fun getDefault(): NLocale
-}
+/**
+ * Returns user selected locale.
+ *
+ * @return user selected locale
+ */
+expect fun getDefaultLocale(): NLocale

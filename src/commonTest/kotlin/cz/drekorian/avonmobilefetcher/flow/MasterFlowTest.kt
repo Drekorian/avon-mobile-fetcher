@@ -5,7 +5,6 @@ import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
 import cz.drekorian.avonmobilefetcher.model.ProductDetails
 import cz.drekorian.avonmobilefetcher.model.Record
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
