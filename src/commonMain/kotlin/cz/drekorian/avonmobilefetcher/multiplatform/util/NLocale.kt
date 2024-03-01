@@ -1,6 +1,21 @@
 package cz.drekorian.avonmobilefetcher.multiplatform.util
 
 /**
+ * Locale representing English (United Kingdom).
+ *
+ * @author Marek Osvald
+ */
+expect val localeUk: NLocale
+
+/**
+ * Returns user selected locale.
+ *
+ * @return user selected locale
+ * @author Marek Osvald
+ */
+expect val defaultLocale: NLocale
+
+/**
  * This data class represents the selected user locale.
  *
  * @property languageCode ISO language code of the selected locale (e.g., "en" for English)

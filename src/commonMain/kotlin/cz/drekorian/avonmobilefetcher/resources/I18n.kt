@@ -1,7 +1,6 @@
 package cz.drekorian.avonmobilefetcher.resources
 
-import cz.drekorian.avonmobilefetcher.multiplatform.util.NLocale
-import cz.drekorian.avonmobilefetcher.multiplatform.util.getDefaultLocale
+import cz.drekorian.avonmobilefetcher.multiplatform.util.defaultLocale
 
 /**
  * This object handles the I18n of error messages.
@@ -9,11 +8,8 @@ import cz.drekorian.avonmobilefetcher.multiplatform.util.getDefaultLocale
  * @author Marek Osvald
  */
 object I18n {
-    private val locale: NLocale
-        get() = getDefaultLocale()
-
     private val resources: Resources by lazy {
-        when (locale.languageCode) {
+        when (defaultLocale.languageCode) {
             "cs" -> ResourcesCz
             "en" -> ResourcesEn
             else -> ResourcesEn

@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "2.3.0"
+version = "2.4.0"
 
 repositories {
     mavenCentral()
@@ -49,16 +49,34 @@ kotlin {
         }
     }
 
-    mingwX64 {
+    macosArm64 {
         binaries {
             executable {
                 baseName = buildString {
                     append(rootProject.name)
+                    append("-macos-arm64")
                     if (buildType == NativeBuildType.DEBUG) {
                         append("-debug")
                     }
                     append("-$version")
                 }
+                entryPoint = "${project.group}.main"
+            }
+        }
+    }
+
+    mingwX64 {
+        binaries {
+            executable {
+                baseName = buildString {
+                    append(rootProject.name)
+                    append("-mingwx64")
+                    if (buildType == NativeBuildType.DEBUG) {
+                        append("-debug")
+                    }
+                    append("-$version")
+                }
+
                 entryPoint = "${project.group}.main"
             }
         }
@@ -84,6 +102,10 @@ kotlin {
             implementation(libs.kotlinx.coroutines.sl4j)
             implementation(libs.ktor.client.cio)
             implementation(libs.sl4j.simple)
+        }
+
+        macosMain.get().dependencies {
+            implementation(libs.ktor.client.darwin)
         }
 
         mingwMain.get().dependencies {

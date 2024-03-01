@@ -13,7 +13,7 @@ import cz.drekorian.avonmobilefetcher.CSV_SEPARATOR
 data class Record(
     private val catalog: Catalog,
     private val product: Product,
-    private val productDetails: ProductDetails?
+    private val productDetails: ProductDetails?,
 ) {
 
     companion object {
@@ -42,34 +42,39 @@ data class Record(
         |="${product.id.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
         |="${productDetails?.id?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
         |="${productDetails?.sku?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
-        |"${product.title
-            .replace(";", ",")
-            .lines()
-            .joinToString(separator = LINE_SEPARATOR)
+        |"${
+            product.title
+                .replace(";", ",")
+                .lines()
+                .joinToString(separator = LINE_SEPARATOR)
         }"
-        |"${productDetails?.title
-            ?.replace("\"", "\"\"")
-            ?.lines()
-            ?.joinToString(separator = LINE_SEPARATOR)
-            ?: ""
+        |"${
+            productDetails?.title
+                ?.replace("\"", "\"\"")
+                ?.lines()
+                ?.joinToString(separator = LINE_SEPARATOR)
+                ?: ""
         }"
-        |"${productDetails?.variant
-            ?.replace(";", ",")
-            ?: ""
+        |"${
+            productDetails?.variant
+                ?.replace(";", ",")
+                ?: ""
         }"
         |${productDetails?.price ?: ""}
         |${productDetails?.priceStandard ?: ""}
-        |"${productDetails?.description
-            ?.replace("\"", "\"\"")
-            ?.replace(";", ",")
-            ?.lines()
-            ?.joinToString(separator = LINE_SEPARATOR)
-            ?: ""
+        |"${
+            productDetails?.description
+                ?.replace("\"", "\"\"")
+                ?.replace(";", ",")
+                ?.lines()
+                ?.joinToString(separator = LINE_SEPARATOR)
+                ?: ""
         }"
-        |"${productDetails?.images?.joinToString(separator = LINE_SEPARATOR)
-            ?.lines()
-            ?.joinToString(separator = LINE_SEPARATOR)
-            ?: ""
+        |"${
+            productDetails?.images?.joinToString(separator = LINE_SEPARATOR)
+                ?.lines()
+                ?.joinToString(separator = LINE_SEPARATOR)
+                ?: ""
         }"
         |"${productDetails?.shadeFile ?: ""}"
         |="${productDetails?.unitNumber ?: ""}"

@@ -4,11 +4,15 @@
     "config:base",
     "schedule:daily"
   ],
-  "labels": ["chore"],
+  "labels": [
+    "chore"
+  ],
   "rebaseWhen": "conflicted",
   "packageRules": [
     {
-      "matchPaths": [".github/**"],
+      "matchPaths": [
+        ".github/**"
+      ],
       "enabled": true,
       "groupName": "github-actions"
     }
