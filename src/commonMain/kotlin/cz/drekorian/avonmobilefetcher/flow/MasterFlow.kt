@@ -1,7 +1,5 @@
 package cz.drekorian.avonmobilefetcher.flow
 
-import cz.drekorian.avonmobilefetcher.printCsv
-import cz.drekorian.avonmobilefetcher.nFormat
 import cz.drekorian.avonmobilefetcher.debugI18n
 import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsFlow
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
@@ -9,6 +7,8 @@ import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
 import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
+import cz.drekorian.avonmobilefetcher.nFormat
+import cz.drekorian.avonmobilefetcher.printCsv
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
  * 1) Downloads catalogs from [CatalogsFlow].
  * 2) Downloads products from [ProductsFlow].
  * 3) Maps catalogs and products into [Record]s.
- * 4) Feeds the records' data into [printCsv].
+ * 4) Prints the records' data via [printCsv].
  *
  * @see CatalogsFlow
  * @see ProductsFlow
