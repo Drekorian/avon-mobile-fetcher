@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonNames
  * @property id unique product ID
  * @property title product title
  * @property category product category
- * @property physicalPage product page position in physical catalog
+ * @property _physicalPage product page position in physical catalog
  * @property displayPage product position in mobile catalog
  * @author Marek Osvald
  */
@@ -22,7 +22,7 @@ data class Product(
     val category: String? = "",
     @Suppress("SpellCheckingInspection")
     @JsonNames("fizical_page")
-    val physicalPage: Int = 0,
+    private val _physicalPage: String = "",
     @JsonNames("display_page") val displayPage: String = "",
 ) {
 
@@ -37,7 +37,10 @@ data class Product(
     private constructor(id: String, page: Int) : this(
         id = id,
         title = "",
-        physicalPage = page,
+        _physicalPage = "$page",
         displayPage = "$page",
     )
+
+    val physicalPage: Int?
+        get() = _physicalPage.toIntOrNull()
 }

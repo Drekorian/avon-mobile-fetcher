@@ -67,7 +67,10 @@ class MasterFlowTest {
             2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";"";="";
         """.trimIndent()
 
-        private val json = Json { ignoreUnknownKeys = true }
+        private val json = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
     }
 
     @Test
