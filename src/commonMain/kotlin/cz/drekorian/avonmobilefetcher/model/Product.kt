@@ -16,7 +16,7 @@ import kotlinx.serialization.json.JsonNames
  */
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
-data class Product constructor(
+data class Product(
     @JsonNames("sku") val id: String,
     val title: String,
     val category: String? = "",
