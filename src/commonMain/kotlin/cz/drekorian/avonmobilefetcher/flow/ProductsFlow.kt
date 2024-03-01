@@ -40,7 +40,7 @@ class ProductsFlow {
         }
 
         val products = response.products.toMutableList()
-        val maxPage = products.maxOf { it.physicalPage }
+        val maxPage = products.maxOf { it.physicalPage ?: 0 }
 
         (1..maxPage).forEach { page ->
             logger.debugI18n("page_data_request", page, catalog.id)

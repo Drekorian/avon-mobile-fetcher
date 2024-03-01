@@ -35,7 +35,7 @@ data class Record(
         |${catalog.id}
         |${product.category}
         |${productDetails?.category ?: ""}
-        |${product.physicalPage}
+        |${product.physicalPage ?: ""}
         |${productDetails?.physicalPage ?: 0}
         |${product.displayPage}
         |${productDetails?.displayPage ?: ""}

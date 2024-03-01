@@ -10,19 +10,19 @@ import kotlinx.serialization.json.JsonNames
  * @property id unique product ID
  * @property title product title
  * @property category product category
- * @property physicalPage product page position in physical catalog
+ * @property _physicalPage product page position in physical catalog
  * @property displayPage product position in mobile catalog
  * @author Marek Osvald
  */
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
-data class Product constructor(
+data class Product(
     @JsonNames("sku") val id: String,
     val title: String,
     val category: String? = "",
     @Suppress("SpellCheckingInspection")
     @JsonNames("fizical_page")
-    val physicalPage: Int = 0,
+    private val _physicalPage: String = "",
     @JsonNames("display_page") val displayPage: String = "",
 ) {
 
@@ -37,7 +37,10 @@ data class Product constructor(
     private constructor(id: String, page: Int) : this(
         id = id,
         title = "",
-        physicalPage = page,
+        _physicalPage = "$page",
         displayPage = "$page",
     )
+
+    val physicalPage: Int?
+        get() = _physicalPage.toIntOrNull()
 }

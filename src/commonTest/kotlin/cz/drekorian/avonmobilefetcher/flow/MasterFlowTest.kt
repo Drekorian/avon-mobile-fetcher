@@ -5,7 +5,6 @@ import cz.drekorian.avonmobilefetcher.model.Catalog
 import cz.drekorian.avonmobilefetcher.model.Product
 import cz.drekorian.avonmobilefetcher.model.ProductDetails
 import cz.drekorian.avonmobilefetcher.model.Record
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -68,7 +67,10 @@ class MasterFlowTest {
             2020;01;katalog;1;;68;0;68;;="54321";="";="";"Test Product 2";"";"";;;"";"";"";="";
         """.trimIndent()
 
-        private val json = Json { ignoreUnknownKeys = true }
+        private val json = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
     }
 
     @Test

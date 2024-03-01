@@ -3,21 +3,20 @@
  *
  * @author Marek Osvald
  */
-@file:Suppress("UNUSED_PARAMETER")
+@file:OptIn(ExperimentalForeignApi::class)
 
 package cz.drekorian.avonmobilefetcher
 
+import cz.drekorian.avonmobilefetcher.multiplatform.CCharArray
 import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArray
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.toKString
-import kotlinx.cinterop.ExperimentalForeignApi
 import platform.posix.sprintf
-import cz.drekorian.avonmobilefetcher.multiplatform.CCharArray
 
 actual fun String.nFormat(vararg args: String): String = cFormat(*args)
 
-@OptIn(ExperimentalForeignApi::class)
 internal fun String.cFormat(vararg args: String): String {
     val argsSize = args.size
     check(argsSize in (0..3)) {
@@ -39,12 +38,9 @@ internal fun String.cFormat(vararg args: String): String {
     return kString
 }
 
-@OptIn(ExperimentalForeignApi::class)
 private fun String.cFormat(buffer: CCharArray, arg1: String) = sprintf(buffer, this, arg1)
 
-@OptIn(ExperimentalForeignApi::class)
 private fun String.cFormat(buffer: CCharArray, arg1: String, arg2: String) = sprintf(buffer, this, arg1, arg2)
 
-@OptIn(ExperimentalForeignApi::class)
 private fun String.cFormat(buffer: CCharArray, arg1: String, arg2: String, arg3: String) =
     sprintf(buffer, this, arg1, arg2, arg3)

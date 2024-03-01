@@ -1,7 +1,7 @@
 package cz.drekorian.avonmobilefetcher.model
 
 import cz.drekorian.avonmobilefetcher.logger
-import cz.drekorian.avonmobilefetcher.multiplatform.util.NCalendarProvider
+import cz.drekorian.avonmobilefetcher.multiplatform.util.getCalendarInstance
 import cz.drekorian.avonmobilefetcher.resources.i18n
 
 /**
@@ -55,7 +55,7 @@ data class Campaign(val year: String, val id: String) {
         }
 
         private fun getCampaignNameFromCurrentDate(): Campaign {
-            val calendar = NCalendarProvider.getInstance()
+            val calendar = getCalendarInstance()
             return Campaign(
                 year = calendar.year.toString(),
                 id = calendar.month.toString().padStart(2, '0')

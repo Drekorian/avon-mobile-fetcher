@@ -1,6 +1,6 @@
 package cz.drekorian.avonmobilefetcher.flow
 
-import cz.drekorian.avonmobilefetcher.CsvPrinter
+import cz.drekorian.avonmobilefetcher.printCsv
 import cz.drekorian.avonmobilefetcher.nFormat
 import cz.drekorian.avonmobilefetcher.debugI18n
 import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsFlow
@@ -17,12 +17,12 @@ import kotlinx.coroutines.runBlocking
  * 1) Downloads catalogs from [CatalogsFlow].
  * 2) Downloads products from [ProductsFlow].
  * 3) Maps catalogs and products into [Record]s.
- * 4) Feeds the records' data into [CsvPrinter].
+ * 4) Feeds the records' data into [printCsv].
  *
  * @see CatalogsFlow
  * @see ProductsFlow
  * @see Record
- * @see CsvPrinter
+ * @see printCsv
  * @author Marek Osvald
  */
 class MasterFlow {
@@ -70,7 +70,7 @@ class MasterFlow {
         )
         logger.infoI18n("writing_to_disk", fileName)
 
-        CsvPrinter.print(
+        printCsv(
             fileName,
             records,
             "Year",
