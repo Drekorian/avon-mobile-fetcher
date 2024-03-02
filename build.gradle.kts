@@ -49,13 +49,7 @@ kotlin {
         }
     }
 
-    mingwX64().apply {
-        compilations.forEach { compilation ->
-            compilation.kotlinOptions.freeCompilerArgs = mutableListOf(
-                "-linker-options", "-L${System.getenv("MINGWX64_HOME")}\\lib"
-            )
-        }
-
+    mingwX64 {
         binaries {
             executable {
                 baseName = buildString {
@@ -92,8 +86,8 @@ kotlin {
             implementation(libs.sl4j.simple)
         }
 
-        nativeMain.get().dependencies {
-            implementation(libs.ktor.client.curl)
+        mingwMain.get().dependencies {
+            implementation(libs.ktor.client.winhttp)
         }
     }
 }
