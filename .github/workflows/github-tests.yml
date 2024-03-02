@@ -28,4 +28,4 @@ jobs:
           name: build
           path: |
             build/libs/avon-mobile-fetcher-all-*.jar
-            build/bin/native/releaseExecutable/*.exe
+            build/bin/mingwX64/releaseExecutable/*.exe
