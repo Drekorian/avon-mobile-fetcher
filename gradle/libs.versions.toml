@@ -4,7 +4,7 @@ buildConfig = "5.3.5"
 kotlin = "1.9.23"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.8.0"
-ktor = "2.3.8"
+ktor = "2.3.9"
 shadow = "8.1.1"
 sj4j = "2.0.12"
 
