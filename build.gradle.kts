@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     java
-    kotlin("multiplatform") version libs.versions.kotlin.get()
-    kotlin("plugin.serialization") version libs.versions.kotlin.get()
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.shadow)
 }
 
@@ -41,7 +41,7 @@ kotlin {
                     }
                     mergeServiceFiles()
                 }.also { shadowJar ->
-                    getByName("${targetName}Jar") {
+                    getByName("${this@jvm.targetName}Jar") {
                         finalizedBy(shadowJar)
                     }
                 }

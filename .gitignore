@@ -28,6 +28,9 @@ hs_err_pid*
 # IntelliJ Idea
 .idea/
 
+# Kotlin
+.kotlin/
+
 # Build
 build/
 
