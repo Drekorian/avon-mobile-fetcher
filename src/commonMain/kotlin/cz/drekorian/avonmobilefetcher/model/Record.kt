@@ -54,6 +54,7 @@ data class Record(
             ?: ""
         }"
         |"${productDetails?.variant
+            ?.replace("\n", " ")
             ?.replace(";", ",")
             ?: ""
         }"
