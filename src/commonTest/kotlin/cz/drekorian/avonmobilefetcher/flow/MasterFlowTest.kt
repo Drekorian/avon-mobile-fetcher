@@ -21,7 +21,7 @@ class MasterFlowTest {
 
         private const val PRODUCT_FIRST_RAW = """
         {
-            "id": "12345",
+            "sku": "12345",
             "title": "Test Product 1",
             "category": "0",
             "fizical_page": 42,
@@ -30,7 +30,7 @@ class MasterFlowTest {
 
         private const val PRODUCT_SECOND_RAW = """
         {
-                "id": "54321",
+                "sku": "54321",
                 "title": "Test Product 2",
                 "category": "1",
                 "fizical_page": 68,

@@ -37,9 +37,9 @@ data class ProductDetails(
     val variant: String,
     @JsonNames("display_page") val displayPage: String = "",
     @Suppress("SpellCheckingInspection")
-    @JsonNames("fizical_page") val physicalPage: Int = 0,
-    @JsonNames("image_file") private val _imageFile: String,
-    @JsonNames("images") private val _images: List<String>,
+    @JsonNames("fizical_page") private val _physicalPage: String? = null,
+    @JsonNames("image_file") private val _imageFile: String = "",
+    @JsonNames("images") private val _images: List<String> = emptyList(),
     @JsonNames("shade_file") private val _shadeFile: String = "",
 ) {
     companion object {
@@ -51,8 +51,16 @@ data class ProductDetails(
     val sku: String
         get() = id
 
+    val physicalPage: Int
+        get() = _physicalPage?.toIntOrNull() ?: 0
+
     val images: List<String>
-        get() = (listOf(_imageFile) + _images).distinct().map { image -> "$IMAGE_BASE_URL/$image" }
+        get() = buildList {
+            if (_images.isNotEmpty()) {
+                add(_imageFile)
+            }
+            addAll(_images)
+        }.distinct().map { image -> "$IMAGE_BASE_URL/$image" }
 
     val shadeFile: String
         get() = _shadeFile.takeIf { shadeFile -> shadeFile.isNotEmpty() }
