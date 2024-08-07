@@ -6,7 +6,7 @@ kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.8.1"
 ktor = "2.3.12"
 shadow = "8.1.1"
-sj4j = "2.0.13"
+sj4j = "2.0.14"
 
 [libraries]
 
