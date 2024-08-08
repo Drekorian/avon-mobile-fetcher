@@ -26,7 +26,7 @@ import kotlinx.serialization.json.JsonNames
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ProductDetails(
-    val category: String,
+    val category: String = "",
     val description: String,
     @JsonNames("sku") val id: String,
     @JsonNames("price_standard") val priceStandard: String,
