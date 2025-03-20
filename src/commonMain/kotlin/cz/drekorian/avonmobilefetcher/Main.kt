@@ -1,16 +1,19 @@
 package cz.drekorian.avonmobilefetcher
 
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.context
+import com.github.ajalt.clikt.core.main
+import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.flag
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.varargValues
 import cz.drekorian.avonmobilefetcher.flow.MasterFlow
 import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsOverride
 import cz.drekorian.avonmobilefetcher.model.Campaign
+import cz.drekorian.avonmobilefetcher.multiplatform.util.getFetcherCommandName
+import cz.drekorian.avonmobilefetcher.resources.i18n
 import mu.KLogger
 import mu.KotlinLogging
-
-private const val ARGUMENT_KEY_DEBUG = "debug"
-private const val ARGUMENTS_DELIMITER = '='
-private const val CATALOG_DELIMITER = ','
-
-internal val ARGUMENT_CATALOGS = """--catalogs=[a-zA-Z]+[,a-zA-Z\-+]*""".toRegex()
 
 /** Main application logger **/
 lateinit var logger: KLogger
@@ -20,44 +23,39 @@ lateinit var logger: KLogger
  *
  * @param args command-line arguments
  */
-fun main(args: Array<String>) {
-    // process optional arguments
-    processArgs(args)
-    MasterFlow().execute()
-}
+fun main(args: Array<String>) = FetcherCommand().main(args)
 
-private fun processArgs(args: Array<String>) {
-    val distinctArgs = args.toMutableSet()
+internal class FetcherCommand : CliktCommand(name = getFetcherCommandName()) {
+    private val isDebug by option("-d", "--debug", help = i18n("help_option_debug")).flag()
+    private val campaign by option("-c", "--campaign", help = i18n("help_option_campaign")).default("")
+    private val catalogs by option("-a", "--catalogs", help = i18n("help_option_catalogs"))
+        .varargValues()
+        .default(emptyList())
 
-    if (ARGUMENT_KEY_DEBUG in distinctArgs) {
-        distinctArgs -= ARGUMENT_KEY_DEBUG
-        enableDebugLogging()
+    init {
+        context { localization = FetcherLocalization() }
     }
 
-    processCatalogsOverride(distinctArgs)
-
-    createLogger()
-    logger.infoI18n("welcome", BuildConfig.appVersion)
-
-    when (val override = distinctArgs.firstOrNull { argument -> Campaign.CAMPAIGN_OVERRIDE_REGEX.matches(argument) }) {
-        null -> logger.infoI18n("override_off")
-        else -> {
-            logger.infoI18n("override_on", override)
-            distinctArgs -= override
-            Campaign.processOverride(override)
+    override fun run() {
+        if (isDebug) {
+            enableDebugLogging()
         }
-    }
+        createLogger()
 
-    if (distinctArgs.isNotEmpty()) {
-        logger.errorI18n("unknown_arguments", distinctArgs.joinToString(separator = ", "))
-    }
-}
+        if (campaign.matches(Campaign.CAMPAIGN_OVERRIDE_REGEX)) {
+            logger.infoI18n("override_on", campaign)
+            Campaign.processOverride(campaign)
+        } else {
+            logger.infoI18n("override_off")
+        }
 
-internal fun processCatalogsOverride(distinctArgs: MutableSet<String>) {
-    distinctArgs.firstOrNull { arg -> ARGUMENT_CATALOGS.matches(arg) }?.let { arg ->
-        val catalogsOverride = arg.split(ARGUMENTS_DELIMITER)[1].split(CATALOG_DELIMITER).toList()
-        CatalogsOverride.setCatalogs(catalogsOverride)
-        distinctArgs -= arg
+        if (catalogs.isNotEmpty()) {
+            CatalogsOverride.setCatalogs(catalogs)
+        }
+
+        logger.infoI18n("welcome", BuildConfig.appVersion)
+
+        MasterFlow().execute()
     }
 }
 

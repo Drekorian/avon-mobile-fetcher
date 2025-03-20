@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "2.5.0"
+version = "3.0.0"
 
 repositories {
     mavenCentral()
@@ -66,6 +66,7 @@ kotlin {
 
     sourceSets {
         commonMain.get().dependencies {
+            implementation(libs.clikt)
             implementation(libs.kotlin.logging)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.contentNegotiation)
@@ -84,6 +85,10 @@ kotlin {
             implementation(libs.kotlinx.coroutines.sl4j)
             implementation(libs.ktor.client.cio)
             implementation(libs.sl4j.simple)
+        }
+
+        jvmTest.get().dependencies {
+            implementation(libs.kotlin.reflect)
         }
 
         mingwMain.get().dependencies {

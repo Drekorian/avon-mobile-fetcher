@@ -6,14 +6,13 @@ import kotlin.test.assertEquals
 
 internal class MainTest {
 
-    @Suppress("SpellCheckingInspection")
     @Test
     fun `common parameter names are valid`() {
+        @Suppress("SpellCheckingInspection")
         val commonNames = listOf("katalog", "darkovy-katalog", "plet", "focus", "distillery")
-        val catalogsParameter = "--catalogs=${commonNames.joinToString(separator = ",")}"
 
-        processCatalogsOverride(distinctArgs = mutableSetOf(catalogsParameter))
-        assertEquals(commonNames.sorted(), CatalogsOverride.catalogs.sorted())
+        CatalogsOverride.setCatalogs(commonNames)
+        assertEquals(commonNames, CatalogsOverride.catalogs)
 
         CatalogsOverride.setCatalogs(emptyList())
     }
