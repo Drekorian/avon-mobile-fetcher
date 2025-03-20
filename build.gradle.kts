@@ -82,7 +82,9 @@ kotlin {
 
     sourceSets {
         commonMain.get().dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.clikt)
+            implementation(libs.koin.core)
             implementation(libs.kotlin.logging)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.contentNegotiation)
