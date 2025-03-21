@@ -2,7 +2,7 @@
 
 buildConfig = "5.5.4"
 clikt = "5.0.1"
-kotlin = "2.1.10"
+kotlin = "2.1.20"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.10.1"
 ktor = "3.1.1"
