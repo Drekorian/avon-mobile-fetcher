@@ -1,8 +1,8 @@
-name: GitHub Build & Run Unit Tests
+name: GitHub Build & Run Unit Tests (macosArm64)
 on: [ push ]
 jobs:
   GitHub-Build-And-Run-Unit-Tests:
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -11,12 +11,13 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 11
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Running tests
-        run: .\gradlew assemble allTests
+        run: ./gradlew assemble allTests
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build
+          name: build-macosArm64
           path: |
-            build/libs/avon-mobile-fetcher-all-*.jar
-            build/bin/mingwX64/releaseExecutable/*.exe
+            build/bin/macosArm64/releaseExecutable/*.kexe
