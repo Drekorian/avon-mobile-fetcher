@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http.pagedata
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.model.PageData
 
 /**
@@ -11,7 +12,8 @@ import cz.drekorian.avonmobilefetcher.model.PageData
  * @see PageDataRequest
  * @author Marek Osvald
  */
-class PageDataResponse private constructor(val pageData: PageData) {
+@OpenForTesting
+internal class PageDataResponse(val pageData: PageData) {
 
     companion object {
 

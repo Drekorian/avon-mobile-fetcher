@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.logger
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
@@ -13,6 +14,7 @@ import io.ktor.http.HttpStatusCode
  * @see cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
  * @author Marek Osvald
  */
+@OpenForTesting
 abstract class Request {
 
     private val HttpResponse.isOk: Boolean

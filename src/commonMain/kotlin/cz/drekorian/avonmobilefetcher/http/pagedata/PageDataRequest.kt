@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http.pagedata
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.http.BASE_HOST
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
@@ -18,7 +19,8 @@ import io.ktor.http.appendPathSegments
  * @see PageDataResponse
  * @author Marek Osvald
  */
-class PageDataRequest : Request() {
+@OpenForTesting
+internal class PageDataRequest : Request() {
 
     companion object {
 

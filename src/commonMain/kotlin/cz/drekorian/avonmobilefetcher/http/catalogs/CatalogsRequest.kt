@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http.catalogs
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.http.BASE_HOST
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
@@ -14,7 +15,8 @@ import io.ktor.http.URLProtocol
  * @see CatalogsResponse
  * @author Marek Osvald
  */
-class CatalogsRequest : Request() {
+@OpenForTesting
+internal class CatalogsRequest : Request() {
 
     /**
      * Sends the request. Attempts to load data about available catalogs.

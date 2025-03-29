@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.http.products
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.http.BASE_HOST
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
 import cz.drekorian.avonmobilefetcher.http.Request
@@ -17,6 +18,7 @@ import io.ktor.http.appendPathSegments
  * @see ProductsResponse
  * @author Marek Osvald
  */
+@OpenForTesting
 class ProductsRequest : Request() {
 
     /**

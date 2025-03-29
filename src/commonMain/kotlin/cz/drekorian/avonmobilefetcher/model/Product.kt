@@ -1,5 +1,6 @@
 package cz.drekorian.avonmobilefetcher.model
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.JsonNames
  * @property displayPage product position in mobile catalog
  * @author Marek Osvald
  */
+@OpenForTesting
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class Product(

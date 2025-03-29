@@ -2,9 +2,11 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
+    alias(libs.plugins.allopen)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.mokkery)
     alias(libs.plugins.shadow)
 }
 
@@ -13,6 +15,23 @@ version = "3.0.0"
 
 repositories {
     mavenCentral()
+}
+
+private val testingTaskRegex = """^.*Tests?$""".toRegex()
+
+val isTesting = gradle
+    .startParameter
+    .taskNames
+    .any { task -> task.matches(testingTaskRegex) }
+
+if (isTesting) {
+    allOpen {
+        annotation("cz.drekorian.avonmobilefetcher.OpenForTesting")
+    }
+}
+
+mokkery {
+    ignoreFinalMembers = true
 }
 
 buildConfig {
@@ -36,7 +55,7 @@ kotlin {
                     archiveAppendix.set("all")
 
                     manifest {
-                        attributes("Main-Class" to "${project.group}.MainKt")
+                        attributes("Main-Class" to "${project.group}.Main")
                     }
                     mergeServiceFiles()
                 }.also { shadowJar ->
@@ -96,6 +115,7 @@ kotlin {
 
         commonTest.get().dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
 
         jvmMain.get().dependencies {

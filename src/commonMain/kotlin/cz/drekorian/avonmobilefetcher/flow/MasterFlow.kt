@@ -1,11 +1,11 @@
 package cz.drekorian.avonmobilefetcher.flow
 
 import cz.drekorian.avonmobilefetcher.debugI18n
+import cz.drekorian.avonmobilefetcher.domain.CampaignRepository
 import cz.drekorian.avonmobilefetcher.flow.catalog.CatalogsFlow
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
 import cz.drekorian.avonmobilefetcher.logger
-import cz.drekorian.avonmobilefetcher.model.Campaign
 import cz.drekorian.avonmobilefetcher.model.Record
 import cz.drekorian.avonmobilefetcher.nFormat
 import cz.drekorian.avonmobilefetcher.printCsv
@@ -25,7 +25,12 @@ import kotlinx.coroutines.runBlocking
  * @see printCsv
  * @author Marek Osvald
  */
-class MasterFlow {
+internal class MasterFlow(
+    private val campaignRepository: CampaignRepository,
+    private val catalogsFlow: CatalogsFlow,
+    private val productDetailsRequest: ProductDetailsRequest,
+    private val productsFlow: ProductsFlow,
+) {
 
     companion object {
 
@@ -38,26 +43,22 @@ class MasterFlow {
      * Executes this [MasterFlow].
      */
     fun execute() {
-        val catalogs = CatalogsFlow().fetchCatalogs()
+        val catalogs = catalogsFlow.fetchCatalogs()
 
-        val campaign = Campaign.getCurrentCampaign()
+        val campaign = campaignRepository.getCurrentCampaign()
 
-        val productFlow = ProductsFlow()
         val catalogWithProducts = catalogs.map { catalog ->
-            catalog to productFlow.fetchProducts(campaign, catalog)
+            catalog to productsFlow.fetchProducts(campaign, catalog)
         }
 
         val records = catalogWithProducts.flatMap { (catalog, products) ->
             logger.infoI18n("product_details_request", catalog.id)
             products.map { product ->
                 val response = try {
-                    runBlocking { ProductDetailsRequest().send(campaign, catalog, product) }
+                    runBlocking { productDetailsRequest.send(campaign, catalog, product) }
                 } catch (_: Exception) {
-                    null
-                }
-
-                if (response == null) {
                     logger.debugI18n("product_details_response_null", catalog.id, product.id)
+                    null
                 }
 
                 Record(catalog, product, response?.productDetails).toCsv(campaign)

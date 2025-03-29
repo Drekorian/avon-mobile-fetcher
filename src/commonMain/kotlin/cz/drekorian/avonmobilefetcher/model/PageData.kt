@@ -1,5 +1,7 @@
 package cz.drekorian.avonmobilefetcher.model
 
+import cz.drekorian.avonmobilefetcher.OpenForTesting
+
 /**
  * This data class holds the product IDs on a single catalog page.
  *
@@ -7,4 +9,5 @@ package cz.drekorian.avonmobilefetcher.model
  * @property ids unique IDs found within page data
  * @author Marek Osvald
  */
-data class PageData(val page: Int, val ids: Collection<String>)
+@OpenForTesting
+internal data class PageData(val page: Int, val ids: Collection<String>)
