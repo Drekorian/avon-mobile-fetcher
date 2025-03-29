@@ -1,5 +1,7 @@
 package cz.drekorian.avonmobilefetcher.flow.catalog
 
+import cz.drekorian.avonmobilefetcher.domain.RuntimeOverride
+import cz.drekorian.avonmobilefetcher.domain.hasCatalogs
 import cz.drekorian.avonmobilefetcher.errorI18n
 import cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
 import cz.drekorian.avonmobilefetcher.infoI18n
@@ -14,7 +16,10 @@ import kotlinx.coroutines.runBlocking
  * @see Catalog
  * @author Marek Osvald
  */
-class CatalogsFlow {
+internal class CatalogsFlow(
+    private val catalogsRequest: CatalogsRequest,
+    private val runtimeOverride: RuntimeOverride,
+) {
 
     companion object {
         private val CATALOG_ID_REGEX = """onclick="open_catalog\(\{url: '(.+)/'""".toRegex()
@@ -26,7 +31,7 @@ class CatalogsFlow {
      * @return list of currently available catalogs
      */
     fun fetchCatalogs(): List<Catalog> {
-        if (CatalogsOverride.hasOverride) {
+        if (runtimeOverride.hasCatalogs) {
             return getCatalogsFromOverride()
         }
 
@@ -37,23 +42,21 @@ class CatalogsFlow {
 
     private fun getCatalogsFromOverride(): List<Catalog> {
         logger.infoI18n("catalogs_override")
-        return CatalogsOverride.catalogs.map { id -> Catalog(id) }
+        return runtimeOverride.catalogs.map { id -> Catalog(id) }
     }
 
     private fun getCatalogsFromSignpost(): List<Catalog> {
         logger.infoI18n("catalogs_request")
-        val response = runBlocking { CatalogsRequest().send() }
+        val response = runBlocking { catalogsRequest.send() }
         if (response == null) {
             logger.errorI18n("catalogs_response_null")
             return emptyList()
         }
 
-        val catalogIds = CATALOG_ID_REGEX.findAll(response.rawHtml)
-
-        val foundCatalogs =
-            catalogIds.mapNotNull { it.groups[1]?.value }.distinct()
-                .map { id -> Catalog(id) }
-                .toList()
+        val foundCatalogs = CATALOG_ID_REGEX.findAll(response.rawHtml)
+            .mapNotNull { matchResult -> matchResult.groups[1]?.value?.let(::Catalog) }
+            .distinct()
+            .toList()
 
         logger.infoI18n(
             "catalogs_request_success",

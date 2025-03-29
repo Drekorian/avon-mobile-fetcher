@@ -1,6 +1,5 @@
 package cz.drekorian.avonmobilefetcher.model
 
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -9,23 +8,15 @@ import kotlin.test.assertEquals
  *
  * @author Marek Osvald
  */
-class CampaignTest {
-
-    @BeforeTest
-    fun setUp() {
-        Campaign.resetOverride()
-    }
+internal class CampaignTest {
 
     @Test
-    fun `when valid override is in place Campaign is properly parsed`() {
-        // arrange
-        Campaign.processOverride("202001")
+    fun `should successfully convert to a restful argument`() {
+        val campaign = Campaign(year = "2025", id = "04")
 
-        // act
-        val campaign = Campaign.getCurrentCampaign()
-
-        // assert
-        assertEquals("2020", campaign.year)
-        assertEquals("01", campaign.id)
+        assertEquals(
+            campaign.toRestfulArgument(),
+            "c04_cz_2025",
+        )
     }
 }

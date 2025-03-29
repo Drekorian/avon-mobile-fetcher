@@ -7,7 +7,7 @@ import cz.drekorian.avonmobilefetcher.model.PageData
  *
  * @author Marek Osvald
  */
-object PageDataFactory {
+internal object PageDataFactory {
 
     private val ID_REGEX = "<Text>(\\d{5})</Text>".toRegex()
 
