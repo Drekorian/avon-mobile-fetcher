@@ -66,4 +66,4 @@ private fun createLogger() {
 /**
  * Enables debug-level logs.
  */
-expect fun enableDebugLogging()
+internal expect fun enableDebugLogging()

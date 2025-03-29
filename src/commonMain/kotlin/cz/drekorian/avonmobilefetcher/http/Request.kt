@@ -8,9 +8,9 @@ import io.ktor.http.HttpStatusCode
 /**
  * This class represents a single HTTP request.
  *
- * @see cz.drekorian.avonmobilefetcher.native.http.catalogs.CatalogsRequest
- * @see cz.drekorian.avonmobilefetcher.native.http.products.ProductsRequest
- * @see cz.drekorian.avonmobilefetcher.native.http.productdetails.ProductDetailsRequest
+ * @see cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
+ * @see cz.drekorian.avonmobilefetcher.http.products.ProductsRequest
+ * @see cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
  * @author Marek Osvald
  */
 abstract class Request {

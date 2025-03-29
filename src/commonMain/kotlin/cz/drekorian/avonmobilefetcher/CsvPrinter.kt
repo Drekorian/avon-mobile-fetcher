@@ -8,5 +8,6 @@ internal const val CSV_SEPARATOR = ";"
  * @param filePath file path to store the given [data]
  * @param data data to store
  * @param header a header to write at the beginning of the CSV
+ * @author Marek Osvald
  */
 expect fun printCsv(filePath: String, data: Iterable<String>, vararg header: String)

@@ -48,11 +48,28 @@ kotlin {
         }
     }
 
+    macosArm64 {
+        binaries {
+            executable {
+                baseName = buildString {
+                    append(rootProject.name)
+                    append("-macos-arm64")
+                    if (buildType == NativeBuildType.DEBUG) {
+                        append("-debug")
+                    }
+                    append("-$version")
+                }
+                entryPoint = "${project.group}.main"
+            }
+        }
+    }
+
     mingwX64 {
         binaries {
             executable {
                 baseName = buildString {
                     append(rootProject.name)
+                    append("-mingwx64")
                     if (buildType == NativeBuildType.DEBUG) {
                         append("-debug")
                     }
@@ -88,6 +105,10 @@ kotlin {
 
         jvmTest.get().dependencies {
             implementation(libs.kotlin.reflect)
+        }
+
+        macosMain.get().dependencies {
+            implementation(libs.ktor.client.darwin)
         }
 
         mingwMain.get().dependencies {
