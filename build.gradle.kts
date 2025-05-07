@@ -55,7 +55,7 @@ kotlin {
                     archiveAppendix.set("all")
 
                     manifest {
-                        attributes("Main-Class" to "${project.group}.Main")
+                        attributes("Main-Class" to "${project.group}.MainKt")
                     }
                     mergeServiceFiles()
                 }.also { shadowJar ->
