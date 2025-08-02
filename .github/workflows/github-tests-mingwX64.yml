@@ -10,7 +10,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: 11
+          java-version: 17
       - name: Running tests
         run: .\gradlew assemble allTests
       - name: Upload artifacts
