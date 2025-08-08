@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
@@ -42,29 +45,22 @@ buildConfig {
 
 kotlin {
     jvm {
-        compilations.named("main") {
-            tasks {
-                register<ShadowJar>("shadowJarJvm") {
-                    group = "build"
-                    from(output)
-                    configurations = listOf(runtimeDependencyFiles)
-
-                    archiveBaseName.set(rootProject.name)
-                    archiveClassifier.set("")
-                    archiveVersion.set("${project.version}")
-                    archiveAppendix.set("all")
-
-                    manifest {
-                        attributes("Main-Class" to "${project.group}.MainKt")
-                    }
-                    mergeServiceFiles()
-                }.also { shadowJar ->
-                    getByName("${this@jvm.targetName}Jar") {
-                        finalizedBy(shadowJar)
-                    }
-                }
-            }
+        mainRun {
+            mainClass = "${project.group}.MainKt"
         }
+    }
+
+
+    tasks.named<ShadowJar>("shadowJar") {
+        archiveBaseName.set(rootProject.name)
+        archiveClassifier.set("")
+        archiveVersion.set("${project.version}")
+        archiveAppendix.set("all")
+
+        manifest {
+            attributes("Main-Class" to "${project.group}.MainKt")
+        }
+        mergeServiceFiles()
     }
 
     macosArm64 {
