@@ -3,11 +3,13 @@ package cz.drekorian.avonmobilefetcher.http.catalogs
 import cz.drekorian.avonmobilefetcher.OpenForTesting
 import cz.drekorian.avonmobilefetcher.http.BASE_HOST
 import cz.drekorian.avonmobilefetcher.http.KtorHttpClient
+import cz.drekorian.avonmobilefetcher.http.Representative
 import cz.drekorian.avonmobilefetcher.http.Request
 import cz.drekorian.avonmobilefetcher.resources.i18n
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.URLProtocol
+import io.ktor.http.appendPathSegments
 
 /**
  * This request fetches the data from [BASE_HOST] (mobile catalog signpost).
@@ -28,6 +30,7 @@ internal class CatalogsRequest : Request() {
             url {
                 protocol = URLProtocol.HTTPS
                 host = BASE_HOST
+                appendPathSegments("avon", Representative)
             }
         }
 
