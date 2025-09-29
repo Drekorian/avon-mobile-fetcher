@@ -35,7 +35,6 @@ internal class ProductsFlow(
      * @return the list of [Product]s for given [catalog]
      */
     fun fetchProducts(campaign: Campaign, catalog: Catalog): List<Product> {
-        logger.infoI18n("products_request", catalog.id)
         val response = runBlocking { productsRequest.send(campaign, catalog.id) }
         if (response == null) {
             logger.errorI18n("products_response_null", catalog.id)

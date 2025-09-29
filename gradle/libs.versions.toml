@@ -2,18 +2,22 @@
 
 buildConfig = "5.6.8"
 clikt = "5.0.3"
+jwt = "1.2.0"
 koin = "4.1.1"
 kotlin = "2.2.20"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.10.2"
 ktor = "3.3.0"
 mokkery = "2.10.0"
+okio = "3.16.0"
 shadow = "9.2.2"
 sj4j = "2.0.17"
 
 [libraries]
 
 clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
+jwt = { module = "com.appstractive:jwt-kt", version.ref = "jwt" }
+jwt-hmac = { module = "com.appstractive:jwt-hmac-kt", version.ref = "jwt" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
@@ -23,7 +27,9 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-sl4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "kotlinxCoroutines" }
+ktor-client-authentication = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-contentEncoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor" }
 ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -31,6 +37,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-client-winhttp = { module = "io.ktor:ktor-client-winhttp", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }
 
 [plugins]

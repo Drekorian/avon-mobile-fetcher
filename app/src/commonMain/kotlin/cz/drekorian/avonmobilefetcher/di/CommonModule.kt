@@ -10,6 +10,7 @@ import cz.drekorian.avonmobilefetcher.http.catalogs.CatalogsRequest
 import cz.drekorian.avonmobilefetcher.http.pagedata.PageDataRequest
 import cz.drekorian.avonmobilefetcher.http.productdetails.ProductDetailsRequest
 import cz.drekorian.avonmobilefetcher.http.products.ProductsRequest
+import cz.drekorian.avonmobilefetcher.productsapi.GetProductsRequest
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module

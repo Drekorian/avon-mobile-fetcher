@@ -98,6 +98,7 @@ object ResourcesEn : Resources {
         "product_details_request" to "Fetching product details for catalog %s.",
         "product_details_request_error" to "Fetching product has failed.",
         "product_details_response_null" to "Fetching product details for catalog: %s, product: %s failed. Server has returned null.",
+        "products_pages_response_error" to "Fetching publication pages for catalog: %s, product: %s failed. %s",
         "invalid_campaign_override" to "Invalid campaign number override '%s'. Override must be in a YYYYMM format.",
         "failed_to_open_file" to "Failed to open file: %s.",
         "writing_to_disk" to "Writing CSV output to file: %s.",

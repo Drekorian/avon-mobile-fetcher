@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "cz.drekorian.avonmobilefetcher"
-version = "3.0.0"
+version = "3.0.0-alpha02"
 
 repositories {
     mavenCentral()
@@ -58,7 +58,7 @@ kotlin {
         archiveAppendix.set("all")
 
         manifest {
-            attributes("Main-Class" to "${project.group}.MainKt")
+            attributes("Main-Class" to "$group.MainKt")
         }
         mergeServiceFiles()
     }
@@ -74,7 +74,7 @@ kotlin {
                     }
                     append("-$version")
                 }
-                entryPoint = "${project.group}.main"
+                entryPoint = "$group.main"
             }
         }
     }
@@ -90,7 +90,7 @@ kotlin {
                     }
                     append("-$version")
                 }
-                entryPoint = "${project.group}.main"
+                entryPoint = "${project.rootProject.group}.main"
             }
         }
     }
@@ -99,14 +99,19 @@ kotlin {
         commonMain.get().dependencies {
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.clikt)
+            implementation(libs.jwt)
+            implementation(libs.jwt.hmac)
             implementation(libs.koin.core)
             implementation(libs.kotlin.logging)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.authentication)
+            implementation(libs.ktor.client.contentEncoding)
             implementation(libs.ktor.client.contentNegotiation)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.okio)
         }
 
         commonTest.get().dependencies {

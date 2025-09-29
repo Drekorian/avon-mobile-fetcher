@@ -99,6 +99,7 @@ object ResourcesCz : Resources {
         "product_details_request" to "Stahuji detaily produktu pro katalog %s.",
         "product_details_request_error" to "Stahovani produktu selhalo.",
         "product_details_response_null" to "Stahovani produktu pro katalog: %s, produkt: %s selhalo. Server vratil null.",
+        "products_pages_response_error" to "Stahnuti stranek pro katalog: %s, produkt: %s selhalo. %s",
         "invalid_campaign_override" to "Neplatny override cisla kampane '%s'. Override musi být ve formatu YYYYMM.",
         "failed_to_open_file" to "Failed to open file: %s.",
         "writing_to_disk" to "Zapisuji CSV vystup do souboru: %s.",

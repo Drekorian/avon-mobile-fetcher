@@ -1,19 +1,19 @@
 package cz.drekorian.avonmobilefetcher.model
 
 import cz.drekorian.avonmobilefetcher.CSV_SEPARATOR
+import cz.drekorian.avonmobilefetcher.productsapi.Product as ProductApiProduct
 
 /**
  * This data class stores the combined info about product and product details.
  *
  * @property catalog product catalog
- * @property product product
- * @property productDetails product details
+ * @property product product data
  * @author Marek Osvald
  */
 data class Record(
     private val catalog: Catalog,
-    private val product: Product,
-    private val productDetails: ProductDetails?,
+    private val product: ProductApiProduct,
+    private val page: String,
 ) {
 
     companion object {
@@ -33,54 +33,23 @@ data class Record(
         |${campaign.year}
         |${campaign.id}
         |${catalog.id}
-        |${product.category}
-        |${productDetails?.category ?: ""}
-        |${product.physicalPage ?: ""}
-        |${productDetails?.physicalPage ?: 0}
-        |${product.displayPage}
-        |${productDetails?.displayPage ?: ""}
-        |="${product.id.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
-        |="${productDetails?.id?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
-        |="${productDetails?.sku?.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING) ?: ""}"
+        |$page
+        |="${product.sku.padStart(PRODUCT_ID_LENGTH, PRODUCT_ID_PADDING)}"
         |"${
             product.title
                 .replace(";", ",")
                 .lines()
                 .joinToString(separator = LINE_SEPARATOR)
         }"
+        |${product.price}
+        |${product.priceStandard}
         |"${
-            productDetails?.title
-                ?.replace("\"", "\"\"")
-                ?.lines()
-                ?.joinToString(separator = LINE_SEPARATOR)
-                ?: ""
-        }"
-        |"${
-            productDetails?.variant
-                ?.replace("\n", " ")
-                ?.replace(";", ",")
-                ?.trimEnd()
-                ?: ""
-        }"
-        |${productDetails?.price ?: ""}
-        |${productDetails?.priceStandard ?: ""}
-        |"${
-            productDetails?.description
-                ?.replace("\"", "\"\"")
-                ?.replace(";", ",")
-                ?.lines()
-                ?.joinToString(separator = LINE_SEPARATOR)
-                ?: ""
-        }"
-        |"${
-            productDetails?.images?.joinToString(separator = LINE_SEPARATOR)
-                ?.lines()
-                ?.joinToString(separator = LINE_SEPARATOR)
-                ?: ""
-        }"
-        |"${productDetails?.shadeFile ?: ""}"
-        |="${productDetails?.unitNumber ?: ""}"
-        |${productDetails?.unitMeasure ?: ""}"""
+            product.description
+                .replace("\"", "\"\"")
+                .replace(";", ",")
+                .lines()
+                .joinToString(separator = LINE_SEPARATOR)
+        }""""
             .lines()
             .filterIndexed { index, _ -> index != 0 }
             .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }
