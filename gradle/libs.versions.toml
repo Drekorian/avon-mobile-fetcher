@@ -7,7 +7,7 @@ kotlin = "2.2.21"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.10.2"
 ktor = "3.3.2"
-mokkery = "2.10.2"
+mokkery = "3.0.0"
 shadow = "9.2.2"
 sj4j = "2.0.17"
 
