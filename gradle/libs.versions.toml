@@ -8,7 +8,7 @@ kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.10.2"
 ktor = "3.3.3"
 mokkery = "3.0.0"
-shadow = "9.2.2"
+shadow = "9.3.0"
 sj4j = "2.0.17"
 
 [libraries]
