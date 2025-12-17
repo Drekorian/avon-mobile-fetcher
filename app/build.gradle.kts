@@ -35,6 +35,7 @@ if (isTesting) {
 
 mokkery {
     ignoreFinalMembers = true
+    stubs.allowConcreteClassInstantiation = true
 }
 
 buildConfig {
