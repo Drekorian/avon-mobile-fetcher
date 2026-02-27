@@ -18,5 +18,5 @@ jobs:
         with:
           name: build-mingwX64
           path: |
-            build/libs/avon-mobile-fetcher-all-*.jar
-            build/bin/mingwX64/releaseExecutable/*.exe
+            app/build/libs/avon-mobile-fetcher-all-*.jar
+            app/build/bin/mingwX64/releaseExecutable/*.exe

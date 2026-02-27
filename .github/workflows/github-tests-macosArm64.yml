@@ -20,4 +20,4 @@ jobs:
         with:
           name: build-macosArm64
           path: |
-            build/bin/macosArm64/releaseExecutable/*.kexe
+            app/build/bin/macosArm64/releaseExecutable/*.kexe
