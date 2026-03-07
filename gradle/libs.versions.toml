@@ -1,6 +1,6 @@
 [versions]
 
-buildConfig = "6.0.8"
+buildConfig = "6.0.9"
 clikt = "5.1.0"
 koin = "4.1.1"
 kotlin = "2.3.10"
