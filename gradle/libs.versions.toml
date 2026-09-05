@@ -9,7 +9,7 @@ kotlinxCoroutines = "1.11.0"
 ktor = "3.5.2"
 mokkery = "3.4.2"
 shadow = "9.6.1"
-sj4j = "2.0.18"
+sj4j = "2.0.19"
 
 [libraries]
 
