@@ -1,7 +1,7 @@
 [versions]
 
 buildConfig = "6.1.2"
-clikt = "5.1.0"
+clikt = "5.2.1"
 koin = "4.2.2"
 kotlin = "2.4.21"
 kotlinLogging = "3.0.5"
